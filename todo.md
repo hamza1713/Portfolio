@@ -1,0 +1,30 @@
+# Portfolio Extension Checklist
+
+- [x] Prepare the downloadable AI/ML engineering CV as a site-hosted file.
+- [x] Add a client-oriented services section for Upwork and Fiverr visitors.
+- [x] Implement the grounded interactive portfolio assistant and suggested questions.
+- [x] Validate the updated page on desktop and mobile, including the new interactions.
+- [x] Save a completed checkpoint and deliver the updated portfolio.
+- [x] Add visible FinSight and Factscope AI demo or walkthrough destinations.
+- [x] Build a project inquiry form with budget and expected timeline fields.
+- [x] Validate the new project links and form interactions across desktop and mobile.
+- [x] Save and deliver the completed portfolio update.
+- [x] Add a Calendly booking option to the project inquiry section.
+- [x] Create a ready-to-connect Calendly booking area with an explicit event-link configuration point.
+- [x] Implement server-enforced anti-spam protection for inquiry submissions.
+- [x] Validate booking and spam-protection behavior across desktop and mobile.
+- [x] Save and deliver the completed inquiry-flow update.
+- [x] Add optional visitor email capture to the AI assistant for follow-up requests.
+- [x] Store assistant follow-up requests securely and notify the portfolio owner.
+- [x] Add an immediate post-submission thank-you page for project inquiries.
+- [x] Create and validate a reusable AI/ML portfolio implementation skill.
+- [x] Validate the new follow-up and confirmation flows across desktop and mobile.
+- [x] Save and deliver the enhanced portfolio and reusable skill.
+- [x] Exercise the assistant follow-up email capture in the live UI using a non-persistent spam-screened QA submission.
+- [x] Exercise the inquiry form redirect to the thank-you page in the live UI using a non-persistent spam-screened QA submission.
+- [x] Build an owner-only admin dashboard for project inquiries and assistant follow-up emails.
+- [x] Add protected server procedures for reviewing submitted lead records.
+- [x] Add Loom-ready video embed sections for FinSight and Factscope AI.
+- [x] Validate dashboard access controls, data views, and video placeholders across desktop and mobile.
+- [x] Save and deliver the admin and video-embed portfolio update.
+- [x] Complete dashboard delivery using automated owner-access tests and unauthenticated route-gate review in lieu of a live owner-browser session.
