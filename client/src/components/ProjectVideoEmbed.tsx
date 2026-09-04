@@ -37,7 +37,7 @@ function formatEmbedUrl(url: string): { type: "iframe" | "video"; embedUrl: stri
   }
 
   // 4. Direct video file (local or cloud mp4 / webm)
-  return { type: "video", embedUrl: trimmed };
+  return { type: "video", embedUrl: encodeURI(trimmed) };
 }
 
 interface ProjectVideoEmbedProps {

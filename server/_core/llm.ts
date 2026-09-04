@@ -221,7 +221,7 @@ const resolveApiUrl = () => {
 };
 
 export const getLLMApiKey = () => {
-  return ENV.geminiApiKey || ENV.forgeApiKey || "";
+  return process.env.GEMINI_API_KEY || ENV.geminiApiKey || process.env.BUILT_IN_FORGE_API_KEY || ENV.forgeApiKey || "";
 };
 
 const assertApiKey = () => {
