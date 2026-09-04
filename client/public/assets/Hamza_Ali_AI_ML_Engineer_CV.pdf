@@ -1,0 +1,102 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Length 1200 >>
+stream
+BT
+/F1 22 Tf
+50 730 Td
+(HAMZA ALI) Tj
+/F2 12 Tf
+0 -20 Td
+(GenAI / AI-ML Engineer | Lahore, Pakistan | hamza1713@gmail.com) Tj
+0 -15 Td
+(GitHub: github.com/hamza1713 | LinkedIn: linkedin.com/in/hamza-ali-b9b8b22a6) Tj
+
+0 -30 Td
+/F1 14 Tf
+(PROFESSIONAL SUMMARY) Tj
+/F2 10 Tf
+0 -15 Td
+(GenAI engineer specializing in RAG systems, agentic workflows, LLM evaluation, and production AI.) Tj
+0 -12 Td
+(Experienced in designing secure role-based access controls and resilient fallback architectures.) Tj
+
+0 -25 Td
+/F1 14 Tf
+(CORE TECHNICAL SKILLS) Tj
+/F2 10 Tf
+0 -15 Td
+(Languages & Frameworks: Python, FastAPI, React 19, TypeScript, PyTorch, LangChain, CrewAI) Tj
+0 -12 Td
+(AI/ML & Databases: Gemini, ChromaDB, DuckDB, RAGAS, Docker, Azure ML, SQL, MySQL) Tj
+
+0 -25 Td
+/F1 14 Tf
+(FEATURED PROJECTS) Tj
+/F1 11 Tf
+0 -16 Td
+(FinSight - Enterprise AI Workspace) Tj
+/F2 10 Tf
+0 -13 Td
+(- Built dual-engine RAG and Text-to-SQL system with 6 protected roles and department isolation.) Tj
+0 -12 Td
+(- Automated quality and security test suite using RAGAS with 34 comprehensive evaluation checks.) Tj
+0 -12 Td
+(- Tech Stack: FastAPI, React 19, ChromaDB, DuckDB, RAGAS, Docker Compose.) Tj
+
+/F1 11 Tf
+0 -18 Td
+(Factscope AI - Claim Verification Platform) Tj
+/F2 10 Tf
+0 -13 Td
+(- Developed news claim-verification pipeline with 3-tier fallback engine (Gemini, Search, Cache).) Tj
+0 -12 Td
+(- Shipped dual web and desktop (Electron) surfaces with 24h response caching and confidence scoring.) Tj
+0 -12 Td
+(- Tech Stack: Gemini, Google Search API, Electron, Express, Serverless.) Tj
+
+0 -25 Td
+/F1 14 Tf
+(EXPERIENCE & EDUCATION) Tj
+/F1 11 Tf
+0 -16 Td
+(Data Science Intern - Advanced Telecom Services (ATS AI Lab) | 2024) Tj
+/F2 10 Tf
+0 -13 Td
+(- Analyzed ~1,000,000 NOAA lightning-strike records for feature engineering and predictive modeling.) Tj
+
+/F1 11 Tf
+0 -18 Td
+(BS Computer Science - Abbottabad University of Science and Technology | Graduated 2026) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000242 00000 n 
+0000000315 00000 n 
+0000000383 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1635
+%%EOF

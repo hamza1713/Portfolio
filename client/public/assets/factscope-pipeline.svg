@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fact-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1310" />
+      <stop offset="100%" stop-color="#15211b" />
+    </linearGradient>
+    <pattern id="fact-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1c2a22" stroke-width="1" stroke-opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fact-bg)" />
+  <rect width="800" height="500" fill="url(#fact-grid)" />
+
+  <!-- Frame & Title -->
+  <rect x="40" y="30" width="720" height="440" rx="6" fill="#121a16" stroke="#2a3c32" stroke-width="1.5" />
+  
+  <rect x="40" y="30" width="720" height="40" fill="#18241f" rx="6" />
+  <text x="60" y="55" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00" letter-spacing="1.5">FACTSCOPE AI // HIGH-AVAILABILITY MULTI-TIER CLAIM VERIFICATION PIPELINE</text>
+  <text x="735" y="55" font-family="'DM Mono', monospace" font-size="10" fill="#71877b" text-anchor="end">SHIPPED WEB + DESKTOP</text>
+
+  <!-- Flow Steps -->
+  <!-- 1. ARTICLE INPUT & CLAIM EXTRACTION -->
+  <g transform="translate(65, 95)">
+    <rect width="185" height="175" rx="4" fill="#17221d" stroke="#314639" stroke-width="1" />
+    <rect x="0" y="0" width="185" height="4" fill="#8fff00" />
+    <text x="14" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">INPUT PROCESSING</text>
+    <text x="14" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="15" fill="#ffffff">Raw Article / Text</text>
+    <line x1="14" y1="66" x2="171" y2="66" stroke="#25372d" stroke-width="1" />
+    <text x="14" y="88" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">• Atomic Claim Parsing</text>
+    <text x="14" y="108" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">• Semantic De-duplication</text>
+    <text x="14" y="128" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">• Context Preservation</text>
+    <text x="14" y="152" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">&gt; Generates N Claims</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 250 182 L 295 182" fill="none" stroke="#8fff00" stroke-width="2" />
+  <polygon points="300,182 292,177 292,187" fill="#8fff00" />
+
+  <!-- 2. THREE-TIER FALLBACK ENGINE -->
+  <g transform="translate(300, 95)">
+    <rect width="240" height="235" rx="4" fill="#18241e" stroke="#8fff00" stroke-width="1.5" />
+    <text x="16" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">3-TIER RESILIENCE ENGINE</text>
+    
+    <!-- Tier 1 -->
+    <g transform="translate(14, 40)">
+      <rect width="212" height="52" rx="3" fill="#131b17" stroke="#2b3e33" stroke-width="1" />
+      <text x="10" y="20" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">TIER 1: PRIMARY</text>
+      <text x="10" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">Gemini + Google Search</text>
+    </g>
+
+    <!-- Tier 2 -->
+    <g transform="translate(14, 102)">
+      <rect width="212" height="52" rx="3" fill="#131b17" stroke="#2b3e33" stroke-width="1" />
+      <text x="10" y="20" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">TIER 2: SEARCH FALLBACK</text>
+      <text x="10" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">Direct Fact Extraction</text>
+    </g>
+
+    <!-- Tier 3 -->
+    <g transform="translate(14, 164)">
+      <rect width="212" height="52" rx="3" fill="#131b17" stroke="#2b3e33" stroke-width="1" />
+      <text x="10" y="20" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">TIER 3: OFFLINE CACHE</text>
+      <text x="10" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">24-Hour Response Cache</text>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -->
+  <path d="M 540 182 L 585 182" fill="none" stroke="#8fff00" stroke-width="2" />
+  <polygon points="590,182 582,177 582,187" fill="#8fff00" />
+
+  <!-- 3. VERDICT & CONFIDENCE OUTPUT -->
+  <g transform="translate(590, 95)">
+    <rect width="145" height="235" rx="4" fill="#17221d" stroke="#314639" stroke-width="1" />
+    <rect x="0" y="0" width="145" height="4" fill="#8fff00" />
+    <text x="12" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">VERDICT</text>
+    <text x="12" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="14" fill="#ffffff">Confidence</text>
+    <line x1="12" y1="66" x2="133" y2="66" stroke="#25372d" stroke-width="1" />
+    <text x="12" y="88" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">• True / False</text>
+    <text x="12" y="108" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">• Misleading</text>
+    <text x="12" y="128" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">• Unverified</text>
+    <line x1="12" y1="145" x2="133" y2="145" stroke="#25372d" stroke-width="1" />
+    <text x="12" y="165" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">CITATION URLS</text>
+    <text x="12" y="185" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Live Sources</text>
+    <text x="12" y="215" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">&gt; 99.4% Uptime</text>
+  </g>
+
+  <!-- Bottom Metric Bar -->
+  <g transform="translate(65, 345)">
+    <rect width="670" height="100" rx="4" fill="#101713" stroke="#212e26" stroke-width="1" />
+    <g transform="translate(30, 20)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">FALLBACK TIERS</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">3× Tiers</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Graceful Quota Degradation</text>
+    </g>
+    <g transform="translate(260, 20)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">RESPONSE CACHE</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">24 Hours</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Instant Repeated Verdicts</text>
+    </g>
+    <g transform="translate(480, 20)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">SHIPPED SURFACES</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">Web + Desktop</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">React + Electron + Express</text>
+    </g>
+  </g>
+</svg>

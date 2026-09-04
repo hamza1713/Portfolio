@@ -22,9 +22,12 @@ const factscopeUrl = "https://github.com/hamza1713/Factscope-AI";
 const linkedinUrl = "https://www.linkedin.com/in/hamza-ali-b9b8b22a6";
 const githubUrl = "https://github.com/hamza1713";
 const email = "hamza1713@gmail.com";
-const cvUrl = "/manus-storage/Hamza_Ali_AI_ML_Engineer_CV_f32dadfe.pdf";
-// Paste Loom share URLs here when walkthroughs are ready, e.g. https://www.loom.com/share/VIDEO_ID
-const projectVideos = { finsight: null as string | null, factscope: null as string | null };
+const cvUrl = "/assets/Hamza_Ali_AI_ML_Engineer_CV.pdf";
+// Add local video files (e.g. "/videos/finsight-demo.mp4") or YouTube/cloud URLs here
+const projectVideos = {
+  finsight: "/videos/Finsight AI.mp4" as string | null,
+  factscope: "/videos/Factscope AI.mp4" as string | null,
+};
 
 const capabilities = [
   ["RAG systems", "Retrieval pipelines, reranking, metadata filters, grounded generation"],
@@ -120,7 +123,7 @@ export default function Home() {
           </div>
           <div className="hero-proof">
             <div className="hero-image-frame">
-              <img src="/manus-storage/hamza-hero-signal_09cd69de.jpg" alt="Abstract technical signal map representing retrieval and reasoning systems" />
+              <img src="/assets/hero-signal.svg" alt="Abstract technical signal map representing retrieval and reasoning systems" />
               <div className="hero-image-caption"><span>FIELD NOTE / 001</span><span>RETRIEVE → REASON → SHIP</span></div>
             </div>
             <div className="proof-rail">
@@ -148,7 +151,7 @@ export default function Home() {
 
           <article className="project project--finsight">
             <div className="project-visual">
-              <img src="/manus-storage/finsight-system-map_c1d8edf9.jpg" alt="Editorial system map for FinSight's RAG, SQL, and security architecture" />
+              <img src="/assets/finsight-architecture.svg" alt="Editorial system map for FinSight's RAG, SQL, and security architecture" />
               <span className="project-index">PROJECT / 01</span>
             </div>
             <div className="project-copy">
@@ -159,7 +162,7 @@ export default function Home() {
               <div className="metric-row"><div><strong>6</strong><span>protected roles</span></div><div><strong>3</strong><span>data stores</span></div><div><strong>0</strong><span>cross-department leaks</span></div></div>
               <div className="tag-row"><span>FastAPI</span><span>React 19</span><span>ChromaDB</span><span>DuckDB</span><span>RAGAS</span></div>
               <div className="project-links"><a className="project-link" href={finsightUrl} target="_blank" rel="noreferrer">Open technical walkthrough <ArrowUpRight size={16} /></a><span>Architecture + source access</span></div>
-              <ProjectVideoEmbed title="FinSight" loomUrl={projectVideos.finsight} />
+              <ProjectVideoEmbed title="FinSight" videoUrl={projectVideos.finsight} fallbackFilename="finsight-demo.mp4" />
             </div>
           </article>
 
@@ -172,10 +175,10 @@ export default function Home() {
               <div className="metric-row"><div><strong>3×</strong><span>fallback tiers</span></div><div><strong>2</strong><span>shipped surfaces</span></div><div><strong>24h</strong><span>response cache</span></div></div>
               <div className="tag-row"><span>Gemini</span><span>Google Search</span><span>Electron</span><span>Express</span><span>Serverless</span></div>
               <div className="project-links"><a className="project-link" href={factscopeUrl} target="_blank" rel="noreferrer">Open product walkthrough <ArrowUpRight size={16} /></a><span>Web + desktop build notes</span></div>
-              <ProjectVideoEmbed title="Factscope AI" loomUrl={projectVideos.factscope} />
+              <ProjectVideoEmbed title="Factscope AI" videoUrl={projectVideos.factscope} fallbackFilename="factscope-demo.mp4" />
             </div>
             <div className="project-visual">
-              <img src="/manus-storage/factscope-verification_d2f9397b.jpg" alt="Editorial claim verification pipeline illustration for Factscope AI" />
+              <img src="/assets/factscope-pipeline.svg" alt="Editorial claim verification pipeline illustration for Factscope AI" />
               <span className="project-index">PROJECT / 02</span>
             </div>
           </article>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fin-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1411" />
+      <stop offset="100%" stop-color="#141f1a" />
+    </linearGradient>
+    <pattern id="fin-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1d2822" stroke-width="1" stroke-opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#fin-bg)" />
+  <rect width="800" height="500" fill="url(#fin-grid)" />
+
+  <!-- Frame & Title -->
+  <rect x="40" y="30" width="720" height="440" rx="6" fill="#131b17" stroke="#2a3c32" stroke-width="1.5" />
+  
+  <rect x="40" y="30" width="720" height="40" fill="#19241f" rx="6" />
+  <text x="60" y="55" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00" letter-spacing="1.5">FINSIGHT // ENTERPRISE RAG + TEXT-TO-SQL SECURITY ARCHITECTURE</text>
+  <text x="735" y="55" font-family="'DM Mono', monospace" font-size="10" fill="#71877b" text-anchor="end">PRODUCTION GRADE</text>
+
+  <!-- Flow Diagrams -->
+  <!-- 1. USER & RBAC GATEWAY -->
+  <g transform="translate(70, 100)">
+    <rect width="180" height="150" rx="4" fill="#18231e" stroke="#8fff00" stroke-width="1.5" />
+    <text x="16" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">01 // RBAC GATEWAY</text>
+    <text x="16" y="54" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="16" fill="#ffffff">User Request</text>
+    <line x1="16" y1="68" x2="164" y2="68" stroke="#2b3d33" stroke-width="1" />
+    <text x="16" y="90" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• 6 Role Personas</text>
+    <text x="16" y="110" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• Dept Isolation Layer</text>
+    <text x="16" y="130" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Zero Cross-Dept Leaks</text>
+  </g>
+
+  <!-- Router Arrow -->
+  <path d="M 250 175 L 305 175" fill="none" stroke="#8fff00" stroke-width="2" />
+  <polygon points="310,175 302,170 302,180" fill="#8fff00" />
+
+  <!-- 2. DUAL ROUTING ENGINE -->
+  <g transform="translate(310, 100)">
+    <!-- Branch A: Unstructured RAG -->
+    <rect x="0" y="0" width="200" height="95" rx="4" fill="#1c2822" stroke="#32473a" stroke-width="1" />
+    <text x="14" y="24" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">BRANCH A: UNSTRUCTURED</text>
+    <text x="14" y="46" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="14" fill="#ffffff">ChromaDB Vector RAG</text>
+    <text x="14" y="68" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Dense embeddings + Metadata</text>
+    <text x="14" y="84" font-family="'DM Mono', monospace" font-size="10" fill="#5b7466">Role-partitioned chunks</text>
+
+    <!-- Branch B: Structured SQL -->
+    <rect x="0" y="115" width="200" height="95" rx="4" fill="#1c2822" stroke="#32473a" stroke-width="1" />
+    <text x="14" y="139" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">BRANCH B: STRUCTURED</text>
+    <text x="14" y="161" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="14" fill="#ffffff">DuckDB Text-to-SQL</text>
+    <text x="14" y="183" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Schema validation + AST parser</text>
+    <text x="14" y="199" font-family="'DM Mono', monospace" font-size="10" fill="#5b7466">Read-only sandboxed execution</text>
+  </g>
+
+  <!-- Connectors into Synthesizer -->
+  <path d="M 510 148 L 550 148 L 550 190 L 565 190" fill="none" stroke="#8fff00" stroke-width="1.5" />
+  <path d="M 510 263 L 550 263 L 550 210 L 565 210" fill="none" stroke="#8fff00" stroke-width="1.5" />
+  <polygon points="570,200 562,195 562,205" fill="#8fff00" />
+
+  <!-- 3. SYNTHESIS & EVALUATION -->
+  <g transform="translate(570, 100)">
+    <rect width="160" height="210" rx="4" fill="#18231e" stroke="#8fff00" stroke-width="1.5" />
+    <text x="14" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">03 // SYNTHESIS</text>
+    <text x="14" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="15" fill="#ffffff">LLM Reasoning</text>
+    <text x="14" y="72" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">FastAPI Backend</text>
+    
+    <line x1="14" y1="86" x2="146" y2="86" stroke="#2b3d33" stroke-width="1" />
+    
+    <text x="14" y="108" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">EVALUATION BENCH</text>
+    <text x="14" y="128" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">RAGAS Framework</text>
+    <text x="14" y="148" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">Context Precision</text>
+    <text x="14" y="166" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">Faithfulness Score</text>
+    <text x="14" y="192" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">&gt; 34 E2E Unit Tests</text>
+  </g>
+
+  <!-- Bottom Metric Bar -->
+  <g transform="translate(70, 335)">
+    <rect width="660" height="110" rx="4" fill="#111714" stroke="#212e26" stroke-width="1" />
+    <g transform="translate(30, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">DATA STORES</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">3 Stores</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">ChromaDB · DuckDB · SQLite</text>
+    </g>
+    <g transform="translate(250, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">SECURITY INTEGRITY</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">0 Leaks</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Verified Isolation Tests</text>
+    </g>
+    <g transform="translate(470, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">FRONTEND CLIENT</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">React 19</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Tailwind + TypeScript</text>
+    </g>
+  </g>
+</svg>

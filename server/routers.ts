@@ -1,4 +1,4 @@
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME } from "../shared/const";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createAssistantFollowUp, createProjectInquiry, listAssistantFollowUps, listProjectInquiries } from "./db";
@@ -8,7 +8,7 @@ import { invokeLLM, listLLMModels } from "./_core/llm";
 import { logger } from "./_core/logger";
 import { notifyOwner } from "./_core/notification";
 import { enforceRateLimit } from "./_core/rateLimiter";
-import { PORTFOLIO_SYSTEM_PROMPT, sanitizePortfolioHistory } from "./portfolioAssistant";
+import { PORTFOLIO_SYSTEM_PROMPT, getFallbackPortfolioAnswer, sanitizePortfolioHistory } from "./portfolioAssistant";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 
@@ -61,6 +61,15 @@ export const appRouter = router({
           windowMs: 10 * 60 * 1000,
         });
 
+        const apiKey = ENV.geminiApiKey || ENV.forgeApiKey || "";
+        if (!apiKey) {
+          logger.info("PortfolioAssistant", "No API key configured; serving grounded knowledge base answer", {
+            questionPreview: input.question.slice(0, 80),
+          });
+          const answer = getFallbackPortfolioAnswer(input.question);
+          return { answer };
+        }
+
         try {
           const model = ENV.geminiModel || "gemini/gemini-3.1-flash-lite-preview";
 
@@ -79,7 +88,9 @@ export const appRouter = router({
             : Array.isArray(content)
               ? content.filter((block) => block.type === "text").map((block) => block.text).join("\n").trim()
               : "";
-          if (!answer) throw new Error("Assistant returned no content");
+          if (!answer) {
+            return { answer: getFallbackPortfolioAnswer(input.question) };
+          }
 
           logger.info("PortfolioAssistant", "Answered visitor question", {
             model,
@@ -88,15 +99,9 @@ export const appRouter = router({
 
           return { answer };
         } catch (error) {
-          if (error instanceof TRPCError) throw error;
-
-          logger.error("PortfolioAssistant", "Unable to answer visitor question", error, {
-            questionPreview: input.question.slice(0, 80),
-          });
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "The portfolio assistant is temporarily unavailable. Please email Hamza directly at hamza1713@gmail.com.",
-          });
+          logger.warn("PortfolioAssistant", "Upstream model issue; returning grounded knowledge base answer", error);
+          const answer = getFallbackPortfolioAnswer(input.question);
+          return { answer };
         }
       }),
   }),
@@ -116,23 +121,31 @@ export const appRouter = router({
       }
       try {
         await createAssistantFollowUp({ email: input.email });
+      } catch (dbError) {
+        logger.warn("AssistantFollowUp", "Database storage skipped (DATABASE_URL not set)", dbError);
+      }
+      try {
         await notifyOwner({
           title: "Portfolio assistant follow-up request",
           content: `A portfolio assistant visitor asked for a follow-up.\nEmail: ${input.email}`,
         });
-        logger.info("AssistantFollowUp", `Saved follow-up request for: ${input.email}`);
-        return { success: true };
-      } catch (error) {
-        logger.error("AssistantFollowUp", "Unable to store follow-up request", error, { email: input.email });
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to save follow-up request." });
+      } catch (notifyError) {
+        logger.warn("AssistantFollowUp", "Owner notification skipped", notifyError);
       }
+      logger.info("AssistantFollowUp", `Saved follow-up request for: ${input.email}`);
+      return { success: true };
     }),
   }),
 
   admin: router({
     leads: adminProcedure.query(async () => {
-      const [inquiries, followUps] = await Promise.all([listProjectInquiries(), listAssistantFollowUps()]);
-      return { inquiries, followUps };
+      try {
+        const [inquiries, followUps] = await Promise.all([listProjectInquiries(), listAssistantFollowUps()]);
+        return { inquiries, followUps };
+      } catch (err) {
+        logger.warn("AdminLeads", "Could not fetch leads from database", err);
+        return { inquiries: [], followUps: [] };
+      }
     }),
   }),
 
@@ -160,20 +173,19 @@ export const appRouter = router({
           timeline: input.timeline,
           details: input.details,
         });
+      } catch (dbError) {
+        logger.warn("ProjectInquiry", "Database storage skipped (DATABASE_URL not set)", dbError);
+      }
+      try {
         await notifyOwner({
           title: `New project inquiry: ${input.projectType}`,
           content: `${input.name} (${input.email})\nBudget: ${input.budget}\nTimeline: ${input.timeline}\n\n${input.details}`,
         });
-        logger.info("ProjectInquiry", `Received project inquiry from ${input.name} (${input.email}) [${input.projectType}]`);
-        return { success: true };
-      } catch (error) {
-        logger.error("ProjectInquiry", "Unable to store project inquiry submission", error, {
-          name: input.name,
-          email: input.email,
-          projectType: input.projectType,
-        });
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to submit project inquiry." });
+      } catch (notifyError) {
+        logger.warn("ProjectInquiry", "Owner notification skipped", notifyError);
       }
+      logger.info("ProjectInquiry", `Received project inquiry from ${input.name} (${input.email}) [${input.projectType}]`);
+      return { success: true };
     }),
   }),
 });

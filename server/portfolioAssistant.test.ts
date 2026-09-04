@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PORTFOLIO_SYSTEM_PROMPT, sanitizePortfolioHistory } from "./portfolioAssistant";
+import { PORTFOLIO_SYSTEM_PROMPT, getFallbackPortfolioAnswer, sanitizePortfolioHistory } from "./portfolioAssistant";
 
 describe("portfolio assistant guardrails", () => {
   it("retains only the most recent valid visitor and assistant messages", () => {
@@ -22,5 +22,12 @@ describe("portfolio assistant guardrails", () => {
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("FinSight");
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("Factscope AI");
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("Never invent facts");
+  });
+
+  it("returns accurate grounded answers via getFallbackPortfolioAnswer", () => {
+    expect(getFallbackPortfolioAnswer("Tell me about FinSight")).toContain("FinSight");
+    expect(getFallbackPortfolioAnswer("What is Factscope AI?")).toContain("Factscope AI");
+    expect(getFallbackPortfolioAnswer("How do you build a RAG system?")).toContain("RAG");
+    expect(getFallbackPortfolioAnswer("Where can I contact Hamza?")).toContain("hamza1713@gmail.com");
   });
 });

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hero-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f0d" />
+      <stop offset="50%" stop-color="#121a16" />
+      <stop offset="100%" stop-color="#080c0a" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1d2822" stroke-width="1" stroke-opacity="0.5" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#hero-bg)" />
+  <rect width="800" height="600" fill="url(#grid)" />
+
+  <!-- Signal Waveform Accents -->
+  <path d="M 50 300 Q 150 180 250 300 T 450 300 T 650 300 T 750 300" fill="none" stroke="#23352b" stroke-width="2" stroke-dasharray="4 4" />
+  <path d="M 50 320 Q 200 420 350 320 T 650 320 T 750 320" fill="none" stroke="#23352b" stroke-width="1.5" stroke-dasharray="2 4" />
+
+  <!-- Central Technical Console Frame -->
+  <rect x="70" y="60" width="660" height="480" rx="6" fill="#141c18" stroke="#2a3b31" stroke-width="1.5" />
+  
+  <!-- Header Bar -->
+  <path d="M 70 60 h 660 v 44 h -660 z" fill="#18231e" />
+  <circle cx="95" cy="82" r="4.5" fill="#8fff00" />
+  <circle cx="112" cy="82" r="4.5" fill="#384c40" />
+  <circle cx="129" cy="82" r="4.5" fill="#384c40" />
+  <text x="150" y="86" font-family="'DM Mono', monospace" font-size="12" fill="#8fff00" letter-spacing="1">SYSTEM ENGINE / GENAI PIPELINE ACTIVE</text>
+  <text x="680" y="86" font-family="'DM Mono', monospace" font-size="11" fill="#71877b" text-anchor="end">NODE 01: READY</text>
+
+  <!-- Pipeline Nodes -->
+  <!-- Step 1: RETRIEVE -->
+  <g transform="translate(105, 140)">
+    <rect width="160" height="120" rx="4" fill="#1a2520" stroke="#32473a" stroke-width="1" />
+    <rect x="0" y="0" width="160" height="4" fill="#8fff00" />
+    <text x="16" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00" letter-spacing="1.5">01 // RETRIEVAL</text>
+    <text x="16" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="16" fill="#ffffff">Dense RAG</text>
+    <text x="16" y="74" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">ChromaDB + BM25</text>
+    <text x="16" y="94" font-family="'DM Mono', monospace" font-size="10" fill="#586f62">Top-k Reranked</text>
+    <circle cx="138" cy="90" r="3" fill="#8fff00" />
+  </g>
+
+  <!-- Connector 1 -->
+  <line x1="265" y1="200" x2="315" y2="200" stroke="#8fff00" stroke-width="2" stroke-dasharray="3 3" />
+  <polygon points="317,200 310,196 310,204" fill="#8fff00" />
+
+  <!-- Step 2: REASON -->
+  <g transform="translate(320, 140)">
+    <rect width="160" height="120" rx="4" fill="#1a2520" stroke="#8fff00" stroke-width="1.5" />
+    <rect x="0" y="0" width="160" height="4" fill="#8fff00" />
+    <text x="16" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00" letter-spacing="1.5">02 // REASONING</text>
+    <text x="16" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="16" fill="#ffffff">LLM Engine</text>
+    <text x="16" y="74" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">Gemini 3.1 Flash</text>
+    <text x="16" y="94" font-family="'DM Mono', monospace" font-size="10" fill="#586f62">Grounded Context</text>
+    <circle cx="138" cy="90" r="3" fill="#8fff00" />
+  </g>
+
+  <!-- Connector 2 -->
+  <line x1="480" y1="200" x2="530" y2="200" stroke="#8fff00" stroke-width="2" stroke-dasharray="3 3" />
+  <polygon points="532,200 525,196 525,204" fill="#8fff00" />
+
+  <!-- Step 3: SHIP -->
+  <g transform="translate(535, 140)">
+    <rect width="160" height="120" rx="4" fill="#1a2520" stroke="#32473a" stroke-width="1" />
+    <rect x="0" y="0" width="160" height="4" fill="#8fff00" />
+    <text x="16" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00" letter-spacing="1.5">03 // EVALUATE</text>
+    <text x="16" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="16" fill="#ffffff">RAGAS Audit</text>
+    <text x="16" y="74" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">Faithfulness 0.94</text>
+    <text x="16" y="94" font-family="'DM Mono', monospace" font-size="10" fill="#586f62">Zero Hallucinations</text>
+    <circle cx="138" cy="90" r="3" fill="#8fff00" />
+  </g>
+
+  <!-- Realtime Telemetry Grid -->
+  <g transform="translate(105, 290)">
+    <rect width="590" height="210" rx="4" fill="#111814" stroke="#25352c" stroke-width="1" />
+    
+    <!-- Telemetry Header -->
+    <text x="20" y="28" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00" letter-spacing="1">&gt; SYSTEM TELEMETRY &amp; ARCHITECTURE PROOF</text>
+
+    <!-- Metrics Column 1 -->
+    <g transform="translate(20, 50)">
+      <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">RBAC ACCESS PROTOCOL</text>
+      <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">6 Protected Roles</text>
+      <text x="0" y="56" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Department Isolation Pre-LLM</text>
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#202d26" />
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#8fff00" />
+    </g>
+
+    <!-- Metrics Column 2 -->
+    <g transform="translate(215, 50)">
+      <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">AUTOMATED TEST SUITE</text>
+      <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">34 Pass / 0 Fail</text>
+      <text x="0" y="56" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">RAGAS Quality + Security</text>
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#202d26" />
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#8fff00" />
+    </g>
+
+    <!-- Metrics Column 3 -->
+    <g transform="translate(410, 50)">
+      <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">DEPLOYED PRODUCTS</text>
+      <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">FinSight + Factscope</text>
+      <text x="0" y="56" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Web + Desktop Surfaces</text>
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#202d26" />
+      <rect x="0" y="66" width="160" height="4" rx="2" fill="#8fff00" />
+    </g>
+
+    <!-- Console Log Stream Simulation -->
+    <g transform="translate(20, 150)">
+      <rect width="550" height="42" rx="3" fill="#0d1410" stroke="#1d2822" stroke-width="1" />
+      <text x="14" y="24" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00">$</text>
+      <text x="32" y="24" font-family="'DM Mono', monospace" font-size="11" fill="#d2e0d8">rag-pipeline --query="enterprise rbac" --status=GROUNDED --latency=312ms</text>
+    </g>
+  </g>
+</svg>

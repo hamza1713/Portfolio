@@ -99,7 +99,7 @@ h1 em { color: var(--pine); font-style: normal; }
 .project-video p { color: var(--ink-soft); font-size: 12px; line-height: 1.42; margin: 5px 0 0; }
 .project-video--placeholder > svg:last-child { color: var(--pine); }
 .project-video--active { display: block; padding: 0; }
-.project-video iframe { aspect-ratio: 16 / 9; border: 0; display: block; width: 100%; }
+.project-video iframe, .project-video video { aspect-ratio: 16 / 9; border: 0; display: block; width: 100%; }
 .admin-review { margin: 0 auto; max-width: 1180px; padding: 30px 24px 64px; }
 .admin-review__header { align-items: flex-start; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; padding-bottom: 30px; }
 .admin-review__header span, .lead-section__heading > span { color: var(--pine); font: 10px var(--mono); letter-spacing: .1em; }
