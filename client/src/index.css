@@ -245,6 +245,7 @@ h1 em { color: var(--pine); font-style: normal; }
 .portfolio-assistant__panel button:not([type="submit"]) { background: transparent !important; border-color: var(--line) !important; color: var(--ink) !important; font-family: var(--sans); }
 .portfolio-assistant__panel .prose { color: var(--ink) !important; font-family: var(--sans); }
 .portfolio-assistant__note { border-top: 1px solid var(--line); color: var(--ink-soft); font: 10px var(--mono); line-height: 1.4; margin: 0; padding: 11px 17px 14px; }
+.portfolio-assistant__loading { color: var(--ink-soft); font: 12px var(--sans); padding: 24px 17px; text-align: center; }
 .assistant-followup { border-top: 1px solid var(--line); padding: 10px 17px; }
 .assistant-followup__prompt { align-items: center; background: transparent; border: 0; color: var(--pine); cursor: pointer; display: inline-flex; font: 600 11px var(--mono); gap: 7px; padding: 2px 0; }
 .assistant-followup label { color: var(--ink); display: block; font: 600 12px var(--sans); }

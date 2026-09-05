@@ -96,12 +96,12 @@ export function ProjectVideoEmbed({
     <div className="project-video project-video--placeholder">
       {hasError ? <AlertCircle size={19} className="text-amber-500" /> : <Film size={19} />}
       <div>
-        <span>{hasError ? "VIDEO NOT FOUND YET" : "WALKTHROUGH READY"}</span>
+        <span>{hasError ? "VIDEO NOT FOUND YET" : "WALKTHROUGH COMING SOON"}</span>
         <strong>{title} demo walkthrough</strong>
         <p>
           {hasError
             ? `Place ${expectedFile} in client/public/videos/ or paste a YouTube/cloud URL to activate.`
-            : `Add your Gemini-generated video as client/public/videos/${expectedFile} or paste a video link.`}
+            : `Record a real screen walkthrough of the running app, save it as client/public/videos/${expectedFile}, or paste a video link.`}
         </p>
       </div>
       <PlayCircle size={22} />

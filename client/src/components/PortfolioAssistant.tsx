@@ -1,7 +1,13 @@
-import { AIChatBox, type Message } from "@/components/AIChatBox";
+import type { Message } from "@/components/AIChatBox";
 import { trpc } from "@/lib/trpc";
 import { CheckCircle2, Mail, MessageCircleMore, Minus, Sparkles, X } from "lucide-react";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
+
+// Lazy-loaded: AIChatBox pulls in Streamdown's markdown/mermaid/code-highlighting
+// engine, which is large. Deferring it to a dynamic import keeps that weight out
+// of every visitor's initial page load and only fetches it once someone actually
+// opens the assistant.
+const AIChatBox = lazy(() => import("@/components/AIChatBox").then((mod) => ({ default: mod.AIChatBox })));
 
 const welcome = "Ask about Hamza’s AI/ML experience, FinSight, Factscope AI, or the kind of work he can help with.";
 const prompts = ["What did Hamza build in FinSight?", "How can he help with a RAG system?", "What is Factscope AI?"];
@@ -43,16 +49,18 @@ export function PortfolioAssistant() {
             <div className="portfolio-assistant__controls"><button onClick={() => setOpen(false)} aria-label="Minimize assistant"><Minus size={17} /></button><button onClick={() => setOpen(false)} aria-label="Close assistant"><X size={17} /></button></div>
           </div>
           <div className="portfolio-assistant__intro"><span className="signal-dot" /><p>{welcome}</p></div>
-          <AIChatBox
-            messages={messages}
-            onSendMessage={sendMessage}
-            isLoading={askMutation.isPending}
-            suggestedPrompts={messages.length === 0 ? prompts : undefined}
-            emptyStateMessage="Start with a useful question"
-            placeholder="Ask about experience or projects…"
-            height="360px"
-            className="portfolio-assistant__panel"
-          />
+          <Suspense fallback={<div className="portfolio-assistant__loading">Loading assistant…</div>}>
+            <AIChatBox
+              messages={messages}
+              onSendMessage={sendMessage}
+              isLoading={askMutation.isPending}
+              suggestedPrompts={messages.length === 0 ? prompts : undefined}
+              emptyStateMessage="Start with a useful question"
+              placeholder="Ask about experience or projects…"
+              height="360px"
+              className="portfolio-assistant__panel"
+            />
+          </Suspense>
           <div className="assistant-followup">
             {followUpSent ? <p className="assistant-followup__success"><CheckCircle2 size={14} /> Follow-up request saved — Hamza will reach out.</p> : followUpOpen ? (
               <form onSubmit={(event) => { event.preventDefault(); if (followUpEmail.trim() && !followUpMutation.isPending) followUpMutation.mutate({ email: followUpEmail, website: followUpWebsite, startedAt: followUpStartedAt }); }}>
