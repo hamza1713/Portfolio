@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cr-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1411" />
+      <stop offset="100%" stop-color="#141f1a" />
+    </linearGradient>
+    <pattern id="cr-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1d2822" stroke-width="1" stroke-opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#cr-bg)" />
+  <rect width="800" height="500" fill="url(#cr-grid)" />
+
+  <!-- Frame & Title -->
+  <rect x="40" y="30" width="720" height="440" rx="6" fill="#131b17" stroke="#2a3c32" stroke-width="1.5" />
+
+  <rect x="40" y="30" width="720" height="40" fill="#19241f" rx="6" />
+  <text x="60" y="55" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00" letter-spacing="1.5">AI CODE REVIEW AGENT // DETERMINISTIC-FIRST MULTI-AGENT PIPELINE</text>
+  <text x="735" y="55" font-family="'DM Mono', monospace" font-size="10" fill="#71877b" text-anchor="end">EMPIRICALLY VERIFIED</text>
+
+  <!-- 1. DETERMINISTIC PRE-SCAN -->
+  <g transform="translate(65, 95)">
+    <rect width="185" height="175" rx="4" fill="#18231e" stroke="#8fff00" stroke-width="1.5" />
+    <text x="14" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">01 // PRE-SCAN</text>
+    <text x="14" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="15" fill="#ffffff">Zero-LLM-Cost Layer</text>
+    <line x1="14" y1="66" x2="171" y2="66" stroke="#2b3d33" stroke-width="1" />
+    <text x="14" y="88" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• Semgrep + Bandit + Ruff</text>
+    <text x="14" y="108" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• AST call-graph memory</text>
+    <text x="14" y="128" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• .code-review.yaml rules</text>
+    <text x="14" y="152" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Sub-millisecond per PR</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 250 182 L 295 182" fill="none" stroke="#8fff00" stroke-width="2" />
+  <polygon points="300,182 292,177 292,187" fill="#8fff00" />
+
+  <!-- 2. MULTI-AGENT CREW -->
+  <g transform="translate(300, 95)">
+    <rect width="215" height="175" rx="4" fill="#1c2822" stroke="#32473a" stroke-width="1" />
+    <text x="14" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">02 // MULTI-AGENT CREW</text>
+    <text x="14" y="50" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">Senior Dev + Security Eng.</text>
+    <text x="14" y="68" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">run async, in parallel</text>
+    <line x1="14" y1="82" x2="201" y2="82" stroke="#25372d" stroke-width="1" />
+    <text x="14" y="104" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">Tech Lead Synthesis</text>
+    <text x="14" y="122" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Confidence rubric + verdict</text>
+    <text x="14" y="148" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Every claim traces upstream</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <path d="M 515 182 L 560 182" fill="none" stroke="#8fff00" stroke-width="2" />
+  <polygon points="565,182 557,177 557,187" fill="#8fff00" />
+
+  <!-- 3. SANDBOX VERIFICATION -->
+  <g transform="translate(568, 95)">
+    <rect width="162" height="175" rx="4" fill="#18231e" stroke="#8fff00" stroke-width="1.5" />
+    <text x="14" y="26" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">03 // PROVE IT</text>
+    <text x="14" y="50" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="14" fill="#ffffff">Sandbox Runner</text>
+    <text x="14" y="68" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Generated pytest suite</text>
+    <line x1="14" y1="82" x2="148" y2="82" stroke="#2b3d33" stroke-width="1" />
+    <text x="14" y="102" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">REPRODUCED</text>
+    <text x="14" y="120" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">PASSING</text>
+    <text x="14" y="138" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">UNVERIFIED</text>
+    <text x="14" y="156" font-family="'DM Mono', monospace" font-size="10" fill="#5b7466">HEURISTIC</text>
+  </g>
+
+  <!-- Bottom Metric Bar -->
+  <g transform="translate(65, 335)">
+    <rect width="670" height="110" rx="4" fill="#111714" stroke="#212e26" stroke-width="1" />
+    <g transform="translate(30, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">AGENT ROSTER</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">3 Agents</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">12 assigned reasoning skills</text>
+    </g>
+    <g transform="translate(260, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">GROUND-TRUTH BENCHMARK</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">100% Verdict</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">14 hand-authored cases</text>
+    </g>
+    <g transform="translate(490, 25)">
+      <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">EDITOR INTEGRATION</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">5 MCP Tools</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Claude Code · Cursor · Windsurf</text>
+    </g>
+  </g>
+</svg>

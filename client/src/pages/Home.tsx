@@ -19,6 +19,7 @@ import {
 
 const finsightUrl = "https://github.com/hamza1713/Enterprise-RAG-Chatbot-with-Role-Base-Access-Control-";
 const factscopeUrl = "https://github.com/hamza1713/Factscope-AI";
+const codereviewUrl = "https://github.com/hamza1713/AI-Code-Review-Agent";
 const linkedinUrl = "https://www.linkedin.com/in/hamza-ali-b9b8b22a6";
 const githubUrl = "https://github.com/hamza1713";
 const email = "hamza1713@gmail.com";
@@ -29,6 +30,7 @@ const cvUrl = "/assets/Hamza_Ali_AI_ML_Engineer_CV.pdf";
 const projectVideos = {
   finsight: null as string | null,
   factscope: null as string | null,
+  codereview: null as string | null,
 };
 
 const capabilities = [
@@ -38,7 +40,7 @@ const capabilities = [
   ["Production delivery", "FastAPI, React, Docker Compose, serverless and Electron"],
 ];
 
-const stack = ["Python", "FastAPI", "React / TypeScript", "Gemini", "LangChain", "CrewAI", "ChromaDB", "DuckDB", "RAGAS", "Docker", "PyTorch", "Azure ML"];
+const stack = ["Python", "FastAPI", "React / TypeScript", "Gemini", "LangChain", "CrewAI", "ChromaDB", "DuckDB", "RAGAS", "Semgrep", "Docker", "PyTorch", "Azure ML"];
 
 const services = [
   {
@@ -121,7 +123,7 @@ export default function Home() {
               <a className="button button--lime" href="#work">Explore the work <ArrowDownRight size={17} /></a>
               <a className="text-link" href={`mailto:${email}`}>Open a conversation <ArrowUpRight size={16} /></a>
             </div>
-            <a className="cv-link" href={cvUrl} download="Hamza_Ali_AI_ML_Engineer_CV.pdf" target="_blank" rel="noreferrer"><Download size={15} /> Download AI/ML CV <span>PDF · 161 KB</span></a>
+            <a className="cv-link" href={cvUrl} download="Hamza_Ali_AI_ML_Engineer_CV.pdf" target="_blank" rel="noreferrer"><Download size={15} /> Download AI/ML CV <span>PDF · 172 KB</span></a>
           </div>
           <div className="hero-proof">
             <div className="hero-image-frame">
@@ -131,7 +133,7 @@ export default function Home() {
             <div className="proof-rail">
               <div className="proof-rail__item"><strong>34</strong><span>automated quality + security tests</span></div>
               <div className="proof-rail__item"><strong>06</strong><span>roles protected by department isolation</span></div>
-              <div className="proof-rail__item"><strong>02</strong><span>shipped AI products, web + desktop</span></div>
+              <div className="proof-rail__item"><strong>03</strong><span>shipped AI systems</span></div>
             </div>
           </div>
         </section>
@@ -148,7 +150,7 @@ export default function Home() {
           <div className="section-intro">
             <SectionLabel number="01">Selected systems</SectionLabel>
             <h2>Proof, not promises.</h2>
-            <p>Two shipped products that show how I approach real AI engineering constraints: messy knowledge, access boundaries, unreliable model quotas, and the need to measure whether a system is actually working.</p>
+            <p>Three shipped systems that show how I approach real AI engineering constraints: messy knowledge, access boundaries, unreliable model quotas, and unverified LLM output shipped as fact.</p>
           </div>
 
           <article className="project project--finsight">
@@ -182,6 +184,23 @@ export default function Home() {
             <div className="project-visual">
               <img src="/assets/factscope-pipeline.svg" alt="Editorial claim verification pipeline illustration for Factscope AI" />
               <span className="project-index">PROJECT / 02</span>
+            </div>
+          </article>
+
+          <article className="project project--codereview">
+            <div className="project-visual">
+              <img src="/assets/codereview-architecture.svg" alt="Editorial architecture map for the AI Code Review Agent's deterministic-first multi-agent pipeline" />
+              <span className="project-index">PROJECT / 03</span>
+            </div>
+            <div className="project-copy">
+              <div className="project-kicker">AUTONOMOUS PR REVIEW PLATFORM · 2026</div>
+              <h3>AI Code Review Agent</h3>
+              <p className="project-subtitle">A multi-agent reviewer that proves its findings before reporting them.</p>
+              <p>Deterministic static analysis (Semgrep, Bandit, AST call-graph, codified governance) runs first and can escalate straight to a Senior Developer, Security Engineer, and Tech Lead crew. Every proposed defect gets a generated regression test executed in a sandbox — the exit code, not the model's confidence, decides the evidence badge.</p>
+              <div className="metric-row"><div><strong>3</strong><span>autonomous review agents</span></div><div><strong>100%</strong><span>verdict accuracy, 14-case benchmark</span></div><div><strong>5</strong><span>MCP tools for editor use</span></div></div>
+              <div className="tag-row"><span>CrewAI</span><span>Gemini</span><span>FastAPI</span><span>Semgrep</span><span>MCP</span></div>
+              <div className="project-links"><a className="project-link" href={codereviewUrl} target="_blank" rel="noreferrer">Open technical walkthrough <ArrowUpRight size={16} /></a><span>Architecture, benchmarks + MCP server</span></div>
+              <ProjectVideoEmbed title="AI Code Review Agent" videoUrl={projectVideos.codereview} fallbackFilename="codereview-demo.mp4" />
             </div>
           </article>
         </section>

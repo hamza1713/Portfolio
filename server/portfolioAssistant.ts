@@ -12,9 +12,10 @@ VERIFIED PORTFOLIO CONTEXT
 - His core strengths are RAG systems, agentic workflows, LLM evaluation, and production delivery. His stack includes Python, FastAPI, React/TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, PyTorch, and Azure ML.
 - FinSight is an enterprise AI workspace. It routes questions between grounded document retrieval (RAG), structured Text-to-SQL analytics, and safe fallbacks. It has six protected roles, three data stores, department isolation before an LLM sees a request, and automated quality/security testing. Its stack includes FastAPI, React 19, ChromaDB, DuckDB, and RAGAS.
 - Factscope AI is a news claim-verification product. It breaks articles into claims, checks them against live sources, and returns confidence-scored verdicts. It has a three-tier fallback engine, a 24-hour response cache, and shipped web and desktop surfaces. Its stack includes Gemini, Google Search, Electron, Express, and serverless tooling.
+- AI Code Review Agent is an autonomous multi-agent pull request reviewer. Deterministic static analysis (Semgrep, Bandit, Ruff, an AST call-graph, and a codified .code-review.yaml governance engine) runs first at zero LLM cost and can escalate straight to a Senior Developer, Security Engineer, and Tech Lead crew. For every proposed defect, the Tech Lead generates a pytest regression test that runs in an isolated sandbox subprocess — the actual exit code, not the model’s confidence, decides the evidence badge (REPRODUCED, PASSING, UNVERIFIED, or HEURISTIC). It also ships an MCP server (5 tools) so Claude Code, Cursor, and Windsurf can call the same review engine from inside the editor, a reusable GitHub Action, SARIF v2.1.0 export, and a 14-case ground-truth benchmark suite scoring 100% verdict accuracy. Its stack includes CrewAI Flows, Gemini, FastAPI, Semgrep, and React 19.
 - For clients, Hamza offers three scoped services: RAG knowledge systems; AI agents and workflow automation; and LLM quality/reliability audits. The first deliverable is an architecture plus working implementation, an agent workflow plus deployment plan, or a technical audit plus prioritized fixes respectively.
 - A good first project conversation covers the client’s data, constraints, users, and definition of a good answer.
-- Hamza’s portfolio links to LinkedIn, GitHub, and an AI/ML engineering CV. His GitHub projects include FinSight and Factscope AI.
+- Hamza’s portfolio links to LinkedIn, GitHub, and an AI/ML engineering CV. His GitHub projects include FinSight, Factscope AI, and the AI Code Review Agent.
 `;
 
 export function sanitizePortfolioHistory(messages: PortfolioChatMessage[]) {
@@ -36,6 +37,10 @@ export function getFallbackPortfolioAnswer(question: string): string {
 
   if (q.includes("factscope")) {
     return "Factscope AI is a news claim-verification product built by Hamza. It breaks articles into atomic claims, checks them against live sources, and returns confidence-scored verdicts. It uses a 3-tier fallback engine (Gemini, Google Search, 24h cache) and has shipped both web and desktop (Electron) surfaces.";
+  }
+
+  if (q.includes("code review") || q.includes("pr review") || q.includes("pull request") || q.includes("sast") || q.includes("semgrep")) {
+    return "AI Code Review Agent is an autonomous multi-agent PR reviewer built by Hamza. Deterministic scanners (Semgrep, Bandit, Ruff, an AST call-graph, codified governance rules) run first at zero LLM cost; a Senior Developer, Security Engineer, and Tech Lead crew escalates only when something real is found. Every defect gets a generated pytest suite executed in a sandbox — the exit code decides the evidence badge, not the model's confidence. It scores 100% verdict accuracy on a 14-case benchmark and ships an MCP server so editors like Claude Code and Cursor can call it directly.";
   }
 
   if (q.includes("rag") || q.includes("retrieval") || q.includes("knowledge")) {

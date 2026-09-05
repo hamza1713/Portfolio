@@ -21,6 +21,7 @@ describe("portfolio assistant guardrails", () => {
   it("keeps the assistant grounded in verified portfolio evidence", () => {
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("FinSight");
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("Factscope AI");
+    expect(PORTFOLIO_SYSTEM_PROMPT).toContain("AI Code Review Agent");
     expect(PORTFOLIO_SYSTEM_PROMPT).toContain("Never invent facts");
   });
 
@@ -28,6 +29,7 @@ describe("portfolio assistant guardrails", () => {
     expect(getFallbackPortfolioAnswer("Tell me about FinSight")).toContain("FinSight");
     expect(getFallbackPortfolioAnswer("What is Factscope AI?")).toContain("Factscope AI");
     expect(getFallbackPortfolioAnswer("How do you build a RAG system?")).toContain("RAG");
+    expect(getFallbackPortfolioAnswer("Tell me about the code review agent")).toContain("AI Code Review Agent");
     expect(getFallbackPortfolioAnswer("Where can I contact Hamza?")).toContain("hamza1713@gmail.com");
   });
 });
