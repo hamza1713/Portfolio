@@ -720,12 +720,16 @@ function getClientIp(req) {
   if (!req) return "127.0.0.1";
   const forwarded = req.headers["x-forwarded-for"];
   if (typeof forwarded === "string") {
-    return forwarded.split(",")[0]?.trim() || req.ip || "127.0.0.1";
+    return forwarded.split(",")[0]?.trim() || "127.0.0.1";
   }
   if (Array.isArray(forwarded) && forwarded[0]) {
     return forwarded[0].trim();
   }
-  return req.ip || req.socket?.remoteAddress || "127.0.0.1";
+  try {
+    return req.ip || req.socket?.remoteAddress || "127.0.0.1";
+  } catch {
+    return req.socket?.remoteAddress || "127.0.0.1";
+  }
 }
 function enforceRateLimit(req, options) {
   const ip = getClientIp(req);
@@ -754,9 +758,10 @@ VERIFIED PORTFOLIO CONTEXT
 - His core strengths are RAG systems, agentic workflows, LLM evaluation, and production delivery. His stack includes Python, FastAPI, React/TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, PyTorch, and Azure ML.
 - FinSight is an enterprise AI workspace. It routes questions between grounded document retrieval (RAG), structured Text-to-SQL analytics, and safe fallbacks. It has six protected roles, three data stores, department isolation before an LLM sees a request, and automated quality/security testing. Its stack includes FastAPI, React 19, ChromaDB, DuckDB, and RAGAS.
 - Factscope AI is a news claim-verification product. It breaks articles into claims, checks them against live sources, and returns confidence-scored verdicts. It has a three-tier fallback engine, a 24-hour response cache, and shipped web and desktop surfaces. Its stack includes Gemini, Google Search, Electron, Express, and serverless tooling.
+- AI Code Review Agent is an autonomous multi-agent pull request reviewer. Deterministic static analysis (Semgrep, Bandit, Ruff, an AST call-graph, and a codified .code-review.yaml governance engine) runs first at zero LLM cost and can escalate straight to a Senior Developer, Security Engineer, and Tech Lead crew. For every proposed defect, the Tech Lead generates a pytest regression test that runs in an isolated sandbox subprocess \u2014 the actual exit code, not the model\u2019s confidence, decides the evidence badge (REPRODUCED, PASSING, UNVERIFIED, or HEURISTIC). It also ships an MCP server (5 tools) so Claude Code, Cursor, and Windsurf can call the same review engine from inside the editor, a reusable GitHub Action, SARIF v2.1.0 export, and a 14-case ground-truth benchmark suite scoring 100% verdict accuracy. Its stack includes CrewAI Flows, Gemini, FastAPI, Semgrep, and React 19.
 - For clients, Hamza offers three scoped services: RAG knowledge systems; AI agents and workflow automation; and LLM quality/reliability audits. The first deliverable is an architecture plus working implementation, an agent workflow plus deployment plan, or a technical audit plus prioritized fixes respectively.
 - A good first project conversation covers the client\u2019s data, constraints, users, and definition of a good answer.
-- Hamza\u2019s portfolio links to LinkedIn, GitHub, and an AI/ML engineering CV. His GitHub projects include FinSight and Factscope AI.
+- Hamza\u2019s portfolio links to LinkedIn, GitHub, and an AI/ML engineering CV. His GitHub projects include FinSight, Factscope AI, and the AI Code Review Agent.
 `;
 function sanitizePortfolioHistory(messages) {
   return messages.filter((message) => (message.role === "user" || message.role === "assistant") && message.content.trim().length > 0).slice(-6).map((message) => ({
@@ -771,6 +776,9 @@ function getFallbackPortfolioAnswer(question) {
   }
   if (q.includes("factscope")) {
     return "Factscope AI is a news claim-verification product built by Hamza. It breaks articles into atomic claims, checks them against live sources, and returns confidence-scored verdicts. It uses a 3-tier fallback engine (Gemini, Google Search, 24h cache) and has shipped both web and desktop (Electron) surfaces.";
+  }
+  if (q.includes("code review") || q.includes("pr review") || q.includes("pull request") || q.includes("sast") || q.includes("semgrep")) {
+    return "AI Code Review Agent is an autonomous multi-agent PR reviewer built by Hamza. Deterministic scanners (Semgrep, Bandit, Ruff, an AST call-graph, codified governance rules) run first at zero LLM cost; a Senior Developer, Security Engineer, and Tech Lead crew escalates only when something real is found. Every defect gets a generated pytest suite executed in a sandbox \u2014 the exit code decides the evidence badge, not the model's confidence. It scores 100% verdict accuracy on a 14-case benchmark and ships an MCP server so editors like Claude Code and Cursor can call it directly.";
   }
   if (q.includes("rag") || q.includes("retrieval") || q.includes("knowledge")) {
     return "Hamza specializes in production RAG knowledge systems. He builds source-aware retrieval pipelines with reranking, metadata filtering, role-based isolation, and RAGAS quality evaluation using Python, FastAPI, ChromaDB, and Gemini.";
@@ -890,7 +898,7 @@ var appRouter = router({
     }),
     ask: publicProcedure.input(z2.object({
       question: z2.string().trim().min(1).max(700),
-      history: z2.array(z2.object({ role: z2.enum(["user", "assistant"]), content: z2.string().min(1).max(700) })).max(6).default([])
+      history: z2.array(z2.object({ role: z2.enum(["user", "assistant"]), content: z2.string().min(1).max(4e3) })).max(6).default([])
     })).mutation(async ({ input, ctx }) => {
       enforceRateLimit(ctx.req, {
         actionName: "portfolio assistant",
@@ -1298,24 +1306,39 @@ var trpcMiddleware = createExpressMiddleware({
   createContext,
   onError({ path, error, req }) {
     if (error.code !== "UNAUTHORIZED" && error.code !== "FORBIDDEN" && error.code !== "TOO_MANY_REQUESTS") {
+      let clientIp = "127.0.0.1";
+      try {
+        clientIp = req.ip || req.socket?.remoteAddress || "127.0.0.1";
+      } catch {
+        clientIp = req.socket?.remoteAddress || "127.0.0.1";
+      }
       logger.error("tRPC", `Error in procedure [${path ?? "unknown"}]`, error, {
         path,
-        ip: req.ip
+        ip: clientIp
       });
     }
   }
 });
-app.use("/api/trpc", trpcMiddleware);
-app.use("/trpc", trpcMiddleware);
-app.use((req, res, next) => {
-  if (req.url.includes("portfolioAssistant") || req.url.includes("projectInquiry") || req.url.includes("assistantFollowUp") || req.url.includes("system")) {
-    return trpcMiddleware(req, res, next);
+app.use((req, _res, next) => {
+  if (req.url.startsWith("/api/trpc/")) {
+    req.url = req.url.slice("/api/trpc".length);
+  } else if (req.url.startsWith("/trpc/")) {
+    req.url = req.url.slice("/trpc".length);
+  } else if (req.url.startsWith("/api/") && (req.url.includes("portfolioAssistant") || req.url.includes("projectInquiry") || req.url.includes("assistantFollowUp") || req.url.includes("system"))) {
+    req.url = req.url.slice("/api".length);
   }
   next();
 });
+app.use(trpcMiddleware);
 app.get("/api/health", (_req, res) => res.json({ status: "ok", service: "portfolio-api", timestamp: (/* @__PURE__ */ new Date()).toISOString() }));
 app.get("/health", (_req, res) => res.json({ status: "ok", service: "portfolio-api", timestamp: (/* @__PURE__ */ new Date()).toISOString() }));
 function handler(req, res) {
+  const matchedPath = req.headers?.["x-matched-path"] || req.headers?.["x-forwarded-uri"] || req.headers?.["x-forwarded-url"] || "";
+  if (matchedPath && (req.url === "/api" || req.url === "/" || req.url.startsWith("/api?") || req.url.startsWith("/?"))) {
+    const queryIndex = req.url.indexOf("?");
+    const query = queryIndex !== -1 ? req.url.slice(queryIndex) : "";
+    req.url = matchedPath.includes("?") ? matchedPath : `${matchedPath}${query}`;
+  }
   return app(req, res);
 }
 export {

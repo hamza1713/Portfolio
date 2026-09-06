@@ -52,7 +52,7 @@ export const appRouter = router({
     ask: publicProcedure
       .input(z.object({
         question: z.string().trim().min(1).max(700),
-        history: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(700) })).max(6).default([]),
+        history: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(4000) })).max(6).default([]),
       }))
       .mutation(async ({ input, ctx }) => {
         enforceRateLimit(ctx.req, {

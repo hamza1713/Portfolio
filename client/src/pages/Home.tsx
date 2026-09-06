@@ -23,14 +23,14 @@ const codereviewUrl = "https://github.com/hamza1713/AI-Code-Review-Agent";
 const linkedinUrl = "https://www.linkedin.com/in/hamza-ali-b9b8b22a6";
 const githubUrl = "https://github.com/hamza1713";
 const email = "hamza1713@gmail.com";
-const cvUrl = "/assets/Hamza_Ali_AI_ML_Engineer_CV.pdf";
+const cvUrl = "/assets/Hamza_Ali_Resume_GenAI_Engineer.pdf";
 // Add a real screen recording of each product (local file in client/public/videos,
 // or a YouTube/Loom/Vimeo URL) once one exists. Left null shows a clean "walkthrough
 // coming soon" placeholder instead of a fake/AI-generated demo.
 const projectVideos = {
-  finsight: null as string | null,
-  factscope: null as string | null,
-  codereview: null as string | null,
+  finsight: "/videos/Finsight.mp4",
+  factscope: "/videos/Factscope.mp4",
+  codereview: "/videos/CodeReview.mp4",
 };
 
 const capabilities = [
@@ -123,7 +123,7 @@ export default function Home() {
               <a className="button button--lime" href="#work">Explore the work <ArrowDownRight size={17} /></a>
               <a className="text-link" href={`mailto:${email}`}>Open a conversation <ArrowUpRight size={16} /></a>
             </div>
-            <a className="cv-link" href={cvUrl} download="Hamza_Ali_AI_ML_Engineer_CV.pdf" target="_blank" rel="noreferrer"><Download size={15} /> Download AI/ML CV <span>PDF · 172 KB</span></a>
+            <a className="cv-link" href={cvUrl} download="Hamza_Ali_Resume_GenAI_Engineer.pdf" target="_blank" rel="noreferrer"><Download size={15} /> Download AI/ML CV <span>PDF · 211 KB</span></a>
           </div>
           <div className="hero-proof">
             <div className="hero-image-frame">

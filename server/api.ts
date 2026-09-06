@@ -15,34 +15,50 @@ const trpcMiddleware = createExpressMiddleware({
   createContext,
   onError({ path, error, req }) {
     if (error.code !== "UNAUTHORIZED" && error.code !== "FORBIDDEN" && error.code !== "TOO_MANY_REQUESTS") {
+      let clientIp = "127.0.0.1";
+      try {
+        clientIp = req.ip || req.socket?.remoteAddress || "127.0.0.1";
+      } catch {
+        clientIp = req.socket?.remoteAddress || "127.0.0.1";
+      }
       logger.error("tRPC", `Error in procedure [${path ?? "unknown"}]`, error, {
         path,
-        ip: req.ip,
+        ip: clientIp,
       });
     }
   },
 });
 
-// Support both /api/trpc and /trpc mount points
-app.use("/api/trpc", trpcMiddleware);
-app.use("/trpc", trpcMiddleware);
-
-// Fallback routing for procedure calls if URL is rewritten
-app.use((req, res, next) => {
-  if (
+// Normalize tRPC URLs so createExpressMiddleware always receives /<procedure> regardless of mount prefix
+app.use((req, _res, next) => {
+  if (req.url.startsWith("/api/trpc/")) {
+    req.url = req.url.slice("/api/trpc".length);
+  } else if (req.url.startsWith("/trpc/")) {
+    req.url = req.url.slice("/trpc".length);
+  } else if (req.url.startsWith("/api/") && (
     req.url.includes("portfolioAssistant") ||
     req.url.includes("projectInquiry") ||
     req.url.includes("assistantFollowUp") ||
     req.url.includes("system")
-  ) {
-    return trpcMiddleware(req, res, next);
+  )) {
+    req.url = req.url.slice("/api".length);
   }
   next();
 });
+
+// Primary tRPC handler
+app.use(trpcMiddleware);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", service: "portfolio-api", timestamp: new Date().toISOString() }));
 app.get("/health", (_req, res) => res.json({ status: "ok", service: "portfolio-api", timestamp: new Date().toISOString() }));
 
 export default function handler(req: any, res: any) {
+  // If Vercel rewrote the URL to /api, recover the intended path from routing headers
+  const matchedPath = (req.headers?.["x-matched-path"] || req.headers?.["x-forwarded-uri"] || req.headers?.["x-forwarded-url"] || "") as string;
+  if (matchedPath && (req.url === "/api" || req.url === "/" || req.url.startsWith("/api?") || req.url.startsWith("/?"))) {
+    const queryIndex = req.url.indexOf("?");
+    const query = queryIndex !== -1 ? req.url.slice(queryIndex) : "";
+    req.url = matchedPath.includes("?") ? matchedPath : `${matchedPath}${query}`;
+  }
   return app(req, res);
 }

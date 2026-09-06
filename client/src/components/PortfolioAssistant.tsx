@@ -22,16 +22,25 @@ export function PortfolioAssistant() {
   const [followUpSent, setFollowUpSent] = useState(false);
   const askMutation = trpc.portfolioAssistant.ask.useMutation({
     onSuccess: ({ answer }) => setMessages((current) => [...current, { role: "assistant", content: answer }]),
-    onError: () => setMessages((current) => [...current, { role: "assistant", content: "I’m unable to answer right now. Please email Hamza directly at hamza1713@gmail.com." }]),
+    onError: (error) => {
+      const isRateLimit = error.message.toLowerCase().includes("too many requests") || error.data?.code === "TOO_MANY_REQUESTS";
+      const message = isRateLimit
+        ? "You’ve sent several questions in a short period. Please wait a minute before asking another question, or email Hamza at hamza1713@gmail.com."
+        : "I’m unable to answer right now. Please email Hamza directly at hamza1713@gmail.com.";
+      setMessages((current) => [...current, { role: "assistant", content: message }]);
+    },
   });
 
   const sendMessage = (content: string) => {
     const question = content.trim();
     if (!question || askMutation.isPending) return;
     const history = messages
-      .filter((message) => message.role === "user" || message.role === "assistant")
+      .filter((message) => (message.role === "user" || message.role === "assistant") && message.content.trim().length > 0)
       .slice(-6)
-      .map((message) => ({ role: message.role as "user" | "assistant", content: message.content }));
+      .map((message) => ({
+        role: message.role as "user" | "assistant",
+        content: message.content.trim().slice(0, 700),
+      }));
     setMessages((current) => [...current, { role: "user", content: question }]);
     askMutation.mutate({ question, history });
   };
