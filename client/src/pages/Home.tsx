@@ -40,7 +40,7 @@ const capabilities = [
   ["Production delivery", "FastAPI, React, Docker Compose, serverless and Electron"],
 ];
 
-const stack = ["Python", "FastAPI", "React / TypeScript", "Gemini", "LangChain", "CrewAI", "ChromaDB", "DuckDB", "RAGAS", "Semgrep", "Docker", "PyTorch", "Azure ML"];
+const stack = ["Python", "FastAPI", "React / TypeScript", "Gemini", "LangChain", "CrewAI", "ChromaDB", "DuckDB", "RAGAS", "Semgrep", "Docker", "pandas", "XGBoost"];
 
 const services = [
   {
@@ -96,6 +96,7 @@ export default function Home() {
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="site-header">
         <a className="wordmark" href="#top" onClick={closeMobile} aria-label="Hamza Ali home">
           <SignalMark small />
@@ -113,15 +114,15 @@ export default function Home() {
         </nav>
       </header>
 
-      <main id="top">
+      <main id="main-content"><span id="top" />
         <section className="hero-section">
           <div className="hero-text">
             <p className="eyebrow"><span className="signal-dot" /> AI/ML ENGINEER · LAHORE / REMOTE</p>
-            <h1>I build AI systems that hold up when the <em>data, permissions,</em> and model get complicated.</h1>
-            <p className="hero-lede">I’m Hamza Ali — a GenAI engineer focused on RAG, agentic workflows, LLM evaluation, and the engineering details that turn a clever demo into a dependable product.</p>
+            <h1>AI systems built around <em>useful answers</em> and inspectable evidence.</h1>
+            <p className="hero-lede">I’m Hamza Ali, an AI / GenAI engineer building document intelligence, developer tools, and agent workflows. Explore the source, architecture, evaluations, and recorded walkthroughs behind my work.</p>
             <div className="hero-actions">
               <a className="button button--lime" href="#work">Explore the work <ArrowDownRight size={17} /></a>
-              <a className="text-link" href={`mailto:${email}`}>Open a conversation <ArrowUpRight size={16} /></a>
+              <a className="text-link" href={`mailto:${email}`}>Discuss a role or project <ArrowUpRight size={16} /></a>
             </div>
             <a className="cv-link" href={cvUrl} download="Hamza_Ali_Resume_GenAI_Engineer.pdf" target="_blank" rel="noreferrer"><Download size={15} /> Download AI/ML CV <span>PDF · 211 KB</span></a>
           </div>
@@ -131,9 +132,9 @@ export default function Home() {
               <div className="hero-image-caption"><span>FIELD NOTE / 001</span><span>RETRIEVE → REASON → SHIP</span></div>
             </div>
             <div className="proof-rail">
-              <div className="proof-rail__item"><strong>34</strong><span>automated quality + security tests</span></div>
-              <div className="proof-rail__item"><strong>06</strong><span>roles protected by department isolation</span></div>
-              <div className="proof-rail__item"><strong>03</strong><span>shipped AI systems</span></div>
+              <div className="proof-rail__item"><strong>RAG</strong><span>retrieval + access control</span></div>
+              <div className="proof-rail__item"><strong>AI</strong><span>agents + developer tools</span></div>
+              <div className="proof-rail__item"><strong>03</strong><span>featured case studies</span></div>
             </div>
           </div>
         </section>
@@ -141,7 +142,7 @@ export default function Home() {
         <section className="signal-strip" aria-label="Portfolio positioning">
           <span>Available for GenAI engineering, RAG architecture, and AI product work</span>
           <span className="signal-strip__line" />
-          <span>July 2026 CS graduate</span>
+          <span>CS graduate · 2026</span>
           <span className="signal-strip__line" />
           <span>Built end-to-end</span>
         </section>
@@ -149,8 +150,8 @@ export default function Home() {
         <section className="work-section section-wrap" id="work">
           <div className="section-intro">
             <SectionLabel number="01">Selected systems</SectionLabel>
-            <h2>Proof, not promises.</h2>
-            <p>Three shipped systems that show how I approach real AI engineering constraints: messy knowledge, access boundaries, unreliable model quotas, and unverified LLM output shipped as fact.</p>
+            <h2>Explore the engineering.</h2>
+            <p>Three detailed case studies in retrieval, model reliability, and developer tooling. Each links to its implementation so you can assess the design choices and current scope.</p>
           </div>
 
           <article className="project project--finsight">
@@ -163,7 +164,8 @@ export default function Home() {
               <h3>FinSight</h3>
               <p className="project-subtitle">RAG + Text-to-SQL, with the security model built in.</p>
               <p>FinSight routes each question to the right kind of answer — grounded document retrieval, structured SQL analytics, or a safe fallback — while keeping department data isolated before an LLM ever sees the request.</p>
-              <div className="metric-row"><div><strong>6</strong><span>protected roles</span></div><div><strong>3</strong><span>data stores</span></div><div><strong>0</strong><span>cross-department leaks</span></div></div>
+              <div className="metric-row"><div><strong>6</strong><span>protected roles</span></div><div><strong>3</strong><span>data stores</span></div><div><strong>RBAC</strong><span>security regression coverage</span></div></div>
+              <p className="project-evidence"><strong>Current scope:</strong> staging candidate. <a href={`${finsightUrl}/blob/main/PRODUCTION_READINESS_REPORT.md`} target="_blank" rel="noreferrer">Read the verification results and launch gates</a>.</p>
               <div className="tag-row"><span>FastAPI</span><span>React 19</span><span>ChromaDB</span><span>DuckDB</span><span>RAGAS</span></div>
               <div className="project-links"><a className="project-link" href={finsightUrl} target="_blank" rel="noreferrer">Open technical walkthrough <ArrowUpRight size={16} /></a><span>Architecture + source access</span></div>
               <ProjectVideoEmbed title="FinSight" videoUrl={projectVideos.finsight} fallbackFilename="finsight-demo.mp4" />
@@ -174,9 +176,10 @@ export default function Home() {
             <div className="project-copy">
               <div className="project-kicker">CLAIM VERIFICATION PLATFORM · 2026</div>
               <h3>Factscope<span className="superscript">AI</span></h3>
-              <p className="project-subtitle">An AI fact-checker designed to stay online.</p>
-              <p>Factscope turns a news article into discrete claims, checks them against live sources, and returns confidence-scored verdicts. Its three-tier fallback engine keeps the product useful when models or search quotas are unavailable.</p>
-              <div className="metric-row"><div><strong>3×</strong><span>fallback tiers</span></div><div><strong>2</strong><span>shipped surfaces</span></div><div><strong>24h</strong><span>response cache</span></div></div>
+              <p className="project-subtitle">From news content to claims, sources, and explanations.</p>
+              <p>Factscope extracts claims from news content and requests source-grounded assessments from Gemini. It connects a React interface with Express and Electron, plus a cache and fallback paths for quota failures.</p>
+              <div className="metric-row"><div><strong>3</strong><span>fallback tiers</span></div><div><strong>2</strong><span>web + desktop interfaces</span></div><div><strong>24h</strong><span>response cache</span></div></div>
+              <p className="project-evidence"><strong>Design tradeoff:</strong> the final fallback removes search grounding. Assessments need source review; model confidence is not a calibrated accuracy score.</p>
               <div className="tag-row"><span>Gemini</span><span>Google Search</span><span>Electron</span><span>Express</span><span>Serverless</span></div>
               <div className="project-links"><a className="project-link" href={factscopeUrl} target="_blank" rel="noreferrer">Open product walkthrough <ArrowUpRight size={16} /></a><span>Web + desktop build notes</span></div>
               <ProjectVideoEmbed title="Factscope AI" videoUrl={projectVideos.factscope} fallbackFilename="factscope-demo.mp4" />
@@ -195,14 +198,24 @@ export default function Home() {
             <div className="project-copy">
               <div className="project-kicker">AUTONOMOUS PR REVIEW PLATFORM · 2026</div>
               <h3>AI Code Review Agent</h3>
-              <p className="project-subtitle">A multi-agent reviewer that proves its findings before reporting them.</p>
-              <p>Deterministic static analysis (Semgrep, Bandit, AST call-graph, codified governance) runs first and can escalate straight to a Senior Developer, Security Engineer, and Tech Lead crew. Every proposed defect gets a generated regression test executed in a sandbox — the exit code, not the model's confidence, decides the evidence badge.</p>
-              <div className="metric-row"><div><strong>3</strong><span>autonomous review agents</span></div><div><strong>100%</strong><span>verdict accuracy, 14-case benchmark</span></div><div><strong>5</strong><span>MCP tools for editor use</span></div></div>
+              <p className="project-subtitle">Static analysis, repository context, and AI review in one workflow.</p>
+              <p>Static scanners and governance rules feed a three-role CrewAI review workflow. Repository context, generated test support, evidence labels, a durable webhook queue, and MCP integration make findings easier to investigate. Test evidence depends on the selected path and available tools.</p>
+              <div className="metric-row"><div><strong>3</strong><span>autonomous review agents</span></div><div><strong>84.2%</strong><span>reported F1 · 14 curated cases</span></div><div><strong>5</strong><span>MCP tools for editor use</span></div></div>
+              <p className="project-evidence"><strong>Benchmark context:</strong> the checked-in report also records 100% verdict accuracy on those 14 cases. These metrics measure different outcomes and do not establish general accuracy. <a href={`${codereviewUrl}/blob/main/BENCHMARK_REPORT.md`} target="_blank" rel="noreferrer">Inspect the case-level report</a>.</p>
               <div className="tag-row"><span>CrewAI</span><span>Gemini</span><span>FastAPI</span><span>Semgrep</span><span>MCP</span></div>
               <div className="project-links"><a className="project-link" href={codereviewUrl} target="_blank" rel="noreferrer">Open technical walkthrough <ArrowUpRight size={16} /></a><span>Architecture, benchmarks + MCP server</span></div>
               <ProjectVideoEmbed title="AI Code Review Agent" videoUrl={projectVideos.codereview} fallbackFilename="codereview-demo.mp4" />
             </div>
           </article>
+        </section>
+
+        <section className="additional-work section-wrap" aria-labelledby="additional-work-title">
+          <div className="section-intro"><p className="eyebrow">MORE TO EXPLORE</p><h2 id="additional-work-title">Agents, multimodal AI, and ML foundations.</h2><p>Smaller projects that show the breadth behind the featured systems.</p></div>
+          <div className="additional-work-grid">
+            <article><p className="project-kicker">FINAL YEAR PROJECT</p><h3>Social Media Brand Manager</h3><p>Five CrewAI agents coordinate strategy, content, brand review, engagement drafts, and analysis through Streamlit and a CLI.</p><p className="project-evidence">Uses simulated social APIs and sample metrics.</p><a href="https://github.com/hamza1713/Autonomous-Social-Media-Brand-Manager" target="_blank" rel="noreferrer">Explore the workflow <ArrowUpRight size={16} /></a></article>
+            <article><p className="project-kicker">MULTIMODAL EXPERIMENT</p><h3>Deep-Fake Detection</h3><p>A React/TypeScript interface that requests Gemini assessments of text and media and presents structured observations.</p><p className="project-evidence">Experimental analysis; forensic accuracy has not been established.</p><a href="https://github.com/hamza1713/Deep-Fake-Detection" target="_blank" rel="noreferrer">Explore the implementation <ArrowUpRight size={16} /></a></article>
+            <article><p className="project-kicker">CLASSICAL MACHINE LEARNING</p><h3>Airline Satisfaction</h3><p>A Jupyter project covering data preparation, XGBoost hyperparameter search, held-out evaluation, and feature importance.</p><p className="project-evidence">Includes the notebook and dataset for inspection.</p><a href="https://github.com/hamza1713/DS-ML-PROJECTS" target="_blank" rel="noreferrer">Explore the notebook <ArrowUpRight size={16} /></a></article>
+          </div>
         </section>
 
         <section className="capabilities-section section-wrap" id="capabilities">
@@ -232,7 +245,7 @@ export default function Home() {
           <div className="services-heading">
             <SectionLabel number="03">For teams & clients</SectionLabel>
             <h2>Bring the difficult AI work.<br /><em>I’ll make it legible.</em></h2>
-            <p>For Upwork and Fiverr clients who need more than a generic chatbot: a scoped technical partner who can move from an unclear AI opportunity to an inspectable, usable system.</p>
+            <p>For teams exploring an AI feature or improving an existing workflow: I can help define the problem, build the implementation, and make the results measurable.</p>
             <a className="button button--ink" href="#contact">Discuss a project <ArrowDownRight size={17} /></a>
           </div>
           <div className="service-list">
@@ -275,8 +288,9 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer"><span>© 2026 Hamza Ali</span><span>Designed around evidence.</span><a href="#top">Back to top <ArrowUpRight size={14} /></a></footer>
+      <footer className="site-footer"><span>© 2026 Hamza Ali</span><span>Source reviewed · September 2026</span><a href="#top">Back to top <ArrowUpRight size={14} /></a></footer>
       <PortfolioAssistant />
     </div>
   );
 }
+
