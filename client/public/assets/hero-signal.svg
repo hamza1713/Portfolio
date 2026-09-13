@@ -67,7 +67,7 @@
     <text x="16" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00" letter-spacing="1.5">03 // EVALUATE</text>
     <text x="16" y="52" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="16" fill="#ffffff">RAGAS Audit</text>
     <text x="16" y="74" font-family="'DM Mono', monospace" font-size="11" fill="#8ba093">Faithfulness 0.94</text>
-    <text x="16" y="94" font-family="'DM Mono', monospace" font-size="10" fill="#586f62">Zero Hallucinations</text>
+    <text x="16" y="94" font-family="'DM Mono', monospace" font-size="10" fill="#586f62">Evidence-led systems</text>
     <circle cx="138" cy="90" r="3" fill="#8fff00" />
   </g>
 
@@ -90,7 +90,7 @@
     <!-- Metrics Column 2 -->
     <g transform="translate(215, 50)">
       <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">AUTOMATED TEST SUITE</text>
-      <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">34 Pass / 0 Fail</text>
+      <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">Tests + Reports</text>
       <text x="0" y="56" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">RAGAS Quality + Security</text>
       <rect x="0" y="66" width="160" height="4" rx="2" fill="#202d26" />
       <rect x="0" y="66" width="160" height="4" rx="2" fill="#8fff00" />
@@ -98,7 +98,7 @@
 
     <!-- Metrics Column 3 -->
     <g transform="translate(410, 50)">
-      <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">DEPLOYED PRODUCTS</text>
+      <text x="0" y="16" font-family="'DM Mono', monospace" font-size="10" fill="#668072">FEATURED SYSTEMS</text>
       <text x="0" y="38" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="20" fill="#ffffff">FinSight + Factscope</text>
       <text x="0" y="56" font-family="'DM Mono', monospace" font-size="10" fill="#8ba093">Web + Desktop Surfaces</text>
       <rect x="0" y="66" width="160" height="4" rx="2" fill="#202d26" />
@@ -113,3 +113,4 @@
     </g>
   </g>
 </svg>
+
