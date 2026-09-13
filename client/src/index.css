@@ -335,3 +335,17 @@ h1 em { color: var(--pine); font-style: normal; }
 }
 @keyframes rise-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* Evidence notes and supporting project index. */
+.skip-link { position: fixed; top: -80px; left: 16px; z-index: 100; padding: 12px 18px; background: #173f35; color: #fff; }
+.skip-link:focus { top: 12px; }
+.project-evidence { font-size: .86rem; line-height: 1.6; padding-left: 14px; border-left: 2px solid currentColor; opacity: .85; }
+.project-evidence a { text-decoration: underline; text-underline-offset: 3px; }
+.additional-work { padding-top: 50px; padding-bottom: 85px; }
+.additional-work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.additional-work-grid article { padding: 26px; border: 1px solid #b9c2b8; display: flex; flex-direction: column; gap: 16px; }
+.additional-work-grid h3 { font-size: 1.5rem; line-height: 1.2; }
+.additional-work-grid p { line-height: 1.65; }
+.additional-work-grid a { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 800px) { .additional-work-grid { grid-template-columns: 1fr; } }
+
