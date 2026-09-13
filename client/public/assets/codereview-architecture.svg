@@ -74,7 +74,7 @@
     </g>
     <g transform="translate(260, 25)">
       <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">GROUND-TRUTH BENCHMARK</text>
-      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">100% Verdict</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">14-case report</text>
       <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">14 hand-authored cases</text>
     </g>
     <g transform="translate(490, 25)">
@@ -84,3 +84,4 @@
     </g>
   </g>
 </svg>
+
