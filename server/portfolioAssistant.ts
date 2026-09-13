@@ -9,10 +9,13 @@ VERIFIED PORTFOLIO CONTEXT
 - Hamza Ali is a GenAI / AI-ML engineer based in Pakistan, open to remote GenAI, AI/ML, and AI agent engineering opportunities.
 - He is a Computer Science graduate from Abbottabad University of Science and Technology (2026).
 - He previously worked as a Data Science Intern at Advanced Telecom Services (ATS AI Lab) in 2024, working with roughly one million NOAA lightning-strike records. His work included data quality, feature engineering, visualization, and communicating technical findings.
-- His core strengths are RAG systems, agentic workflows, LLM evaluation, and production delivery. His stack includes Python, FastAPI, React/TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, PyTorch, and Azure ML.
-- FinSight is an enterprise AI workspace. It routes questions between grounded document retrieval (RAG), structured Text-to-SQL analytics, and safe fallbacks. It has six protected roles, three data stores, department isolation before an LLM sees a request, and automated quality/security testing. Its stack includes FastAPI, React 19, ChromaDB, DuckDB, and RAGAS.
-- Factscope AI is a news claim-verification product. It breaks articles into claims, checks them against live sources, and returns confidence-scored verdicts. It has a three-tier fallback engine, a 24-hour response cache, and shipped web and desktop surfaces. Its stack includes Gemini, Google Search, Electron, Express, and serverless tooling.
-- AI Code Review Agent is an autonomous multi-agent pull request reviewer. Deterministic static analysis (Semgrep, Bandit, Ruff, an AST call-graph, and a codified .code-review.yaml governance engine) runs first at zero LLM cost and can escalate straight to a Senior Developer, Security Engineer, and Tech Lead crew. For every proposed defect, the Tech Lead generates a pytest regression test that runs in an isolated sandbox subprocess — the actual exit code, not the model’s confidence, decides the evidence badge (REPRODUCED, PASSING, UNVERIFIED, or HEURISTIC). It also ships an MCP server (5 tools) so Claude Code, Cursor, and Windsurf can call the same review engine from inside the editor, a reusable GitHub Action, SARIF v2.1.0 export, and a 14-case ground-truth benchmark suite scoring 100% verdict accuracy. Its stack includes CrewAI Flows, Gemini, FastAPI, Semgrep, and React 19.
+- His core strengths are RAG systems, agentic workflows, LLM evaluation, and production delivery. His stack includes Python, FastAPI, React/TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, pandas, and XGBoost.
+- FinSight is a staging candidate for an enterprise AI workspace, combining role-scoped document retrieval, Text-to-SQL analytics, six roles, ChromaDB, DuckDB, and RAGAS tooling. Its readiness report documents local verification and remaining deployment gates. Do not claim zero data leaks, production certification, or a current passing test count; the saved RBAC evaluation contains warnings.
+- Factscope AI extracts claims from news content and requests Gemini assessments with source citations. It includes React, Express, Electron, a 24-hour cache, and three quota fallback tiers. The final tier runs without search grounding, so not every response is verified against live sources. Model confidence is not calibrated accuracy.
+- AI Code Review Agent combines static scanners, repository context, governance rules, and three CrewAI review roles. It includes a React dashboard, durable SQLite webhook queue, SARIF export, MCP integration, and generated regression-test support. Execution evidence depends on the selected path and tool availability; do not claim every finding is proven. Its checked-in benchmark report records 84.2% finding-level F1 and 100% verdict accuracy on 14 curated cases. These are distinct metrics on a small benchmark, not general accuracy guarantees.
+- Autonomous Social Media Brand Manager is a final year project with five CrewAI agents and Streamlit/CLI interfaces. Social APIs and performance metrics are simulated; do not describe real publishing or measured campaign results.
+- Deep-Fake Detection is an experimental Gemini-based multimodal analysis interface, not a validated forensic detector.
+- DS-ML-PROJECTS contains an airline-satisfaction notebook implementing XGBoost tuning and held-out evaluation. Its comparison table includes fixed reference numbers for other models.
 - For clients, Hamza offers three scoped services: RAG knowledge systems; AI agents and workflow automation; and LLM quality/reliability audits. The first deliverable is an architecture plus working implementation, an agent workflow plus deployment plan, or a technical audit plus prioritized fixes respectively.
 - A good first project conversation covers the client’s data, constraints, users, and definition of a good answer.
 - Hamza’s portfolio links to LinkedIn, GitHub, and an AI/ML engineering CV. His GitHub projects include FinSight, Factscope AI, and the AI Code Review Agent.
@@ -32,15 +35,27 @@ export function getFallbackPortfolioAnswer(question: string): string {
   const q = question.toLowerCase();
 
   if (q.includes("finsight")) {
-    return "FinSight is an enterprise AI workspace built by Hamza. It routes queries between grounded document retrieval (ChromaDB RAG) and structured SQL analytics (DuckDB), enforcing 6 protected roles with department isolation before any LLM call. It also features an automated 34-test evaluation suite using RAGAS.";
+    return "FinSight combines department-scoped document retrieval and SQL analytics using FastAPI, React, ChromaDB, and DuckDB. It includes six roles and security regression tests. It is documented as a staging candidate; its readiness report lists the deployment and evaluation gates still to complete.";
   }
 
   if (q.includes("factscope")) {
-    return "Factscope AI is a news claim-verification product built by Hamza. It breaks articles into atomic claims, checks them against live sources, and returns confidence-scored verdicts. It uses a 3-tier fallback engine (Gemini, Google Search, 24h cache) and has shipped both web and desktop (Electron) surfaces.";
+    return "Factscope AI extracts news claims and requests Gemini assessments with source citations. It includes web and Electron interfaces, a 24-hour cache, and three quota fallback tiers. The final fallback runs without search grounding, so results need source review and confidence scores should not be treated as measured accuracy.";
   }
 
   if (q.includes("code review") || q.includes("pr review") || q.includes("pull request") || q.includes("sast") || q.includes("semgrep")) {
-    return "AI Code Review Agent is an autonomous multi-agent PR reviewer built by Hamza. Deterministic scanners (Semgrep, Bandit, Ruff, an AST call-graph, codified governance rules) run first at zero LLM cost; a Senior Developer, Security Engineer, and Tech Lead crew escalates only when something real is found. Every defect gets a generated pytest suite executed in a sandbox — the exit code decides the evidence badge, not the model's confidence. It scores 100% verdict accuracy on a 14-case benchmark and ships an MCP server so editors like Claude Code and Cursor can call it directly.";
+    return "AI Code Review Agent combines static analysis, repository context, governance rules, and three CrewAI review roles. It supports generated regression tests, a durable webhook queue, SARIF export, and MCP tools; test evidence depends on the execution path. Its checked-in report records 84.2% F1 and 100% verdict accuracy on 14 curated cases, which does not establish general accuracy.";
+  }
+
+  if (q.includes("social media") || q.includes("brand manager")) {
+    return "The Social Media Brand Manager is Hamza's final year project. Five CrewAI agents coordinate strategy, content, brand review, engagement drafts, and analytics through Streamlit and a CLI. It uses simulated social APIs and sample metrics.";
+  }
+
+  if (q.includes("deepfake") || q.includes("deep-fake") || q.includes("deep fake")) {
+    return "Deep-Fake Detection is an experimental React/TypeScript application that requests Gemini assessments of text and media. It presents structured observations; its confidence scores are not validated forensic accuracy.";
+  }
+
+  if (q.includes("airline") || q.includes("xgboost") || q.includes("ds-ml")) {
+    return "Hamza's airline-satisfaction project is a Jupyter notebook covering data preparation, XGBoost tuning with cross-validation, held-out metrics, and feature importance. The repository includes the dataset and notebook.";
   }
 
   if (q.includes("rag") || q.includes("retrieval") || q.includes("knowledge")) {
@@ -56,7 +71,7 @@ export function getFallbackPortfolioAnswer(question: string): string {
   }
 
   if (q.includes("stack") || q.includes("technology") || q.includes("technologies") || q.includes("tools") || q.includes("python")) {
-    return "Hamza's core engineering stack includes Python, FastAPI, React 19, TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, PyTorch, and Azure ML.";
+    return "Hamza's core engineering stack includes Python, FastAPI, React 19, TypeScript, Gemini, LangChain, CrewAI, ChromaDB, DuckDB, RAGAS, Docker, pandas, and XGBoost.";
   }
 
   if (q.includes("service") || q.includes("hire") || q.includes("pricing") || q.includes("cost") || q.includes("work with") || q.includes("upwork") || q.includes("fiverr")) {
@@ -69,4 +84,5 @@ export function getFallbackPortfolioAnswer(question: string): string {
 
   return "Hamza Ali is an AI/ML Engineer specializing in RAG architectures, agentic workflows, and LLM evaluation (Python, FastAPI, Gemini, ChromaDB). For specific project discussions or custom questions, feel free to email him directly at hamza1713@gmail.com.";
 }
+
 
