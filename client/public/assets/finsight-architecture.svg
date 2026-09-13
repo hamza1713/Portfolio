@@ -17,7 +17,7 @@
   
   <rect x="40" y="30" width="720" height="40" fill="#19241f" rx="6" />
   <text x="60" y="55" font-family="'DM Mono', monospace" font-size="11" fill="#8fff00" letter-spacing="1.5">FINSIGHT // ENTERPRISE RAG + TEXT-TO-SQL SECURITY ARCHITECTURE</text>
-  <text x="735" y="55" font-family="'DM Mono', monospace" font-size="10" fill="#71877b" text-anchor="end">PRODUCTION GRADE</text>
+  <text x="735" y="55" font-family="'DM Mono', monospace" font-size="10" fill="#71877b" text-anchor="end">STAGING CANDIDATE</text>
 
   <!-- Flow Diagrams -->
   <!-- 1. USER & RBAC GATEWAY -->
@@ -28,7 +28,7 @@
     <line x1="16" y1="68" x2="164" y2="68" stroke="#2b3d33" stroke-width="1" />
     <text x="16" y="90" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• 6 Role Personas</text>
     <text x="16" y="110" font-family="'DM Mono', monospace" font-size="11" fill="#93a89c">• Dept Isolation Layer</text>
-    <text x="16" y="130" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Zero Cross-Dept Leaks</text>
+    <text x="16" y="130" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Department-scoped retrieval</text>
   </g>
 
   <!-- Router Arrow -->
@@ -70,7 +70,7 @@
     <text x="14" y="128" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="13" fill="#ffffff">RAGAS Framework</text>
     <text x="14" y="148" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">Context Precision</text>
     <text x="14" y="166" font-family="'DM Mono', monospace" font-size="10" fill="#93a89c">Faithfulness Score</text>
-    <text x="14" y="192" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">&gt; 34 E2E Unit Tests</text>
+    <text x="14" y="192" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Security regression tests</text>
   </g>
 
   <!-- Bottom Metric Bar -->
@@ -83,8 +83,8 @@
     </g>
     <g transform="translate(250, 25)">
       <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">SECURITY INTEGRITY</text>
-      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">0 Leaks</text>
-      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Verified Isolation Tests</text>
+      <text x="0" y="44" font-family="'IBM Plex Sans', sans-serif" font-weight="700" font-size="22" fill="#ffffff">RBAC</text>
+      <text x="0" y="64" font-family="'DM Mono', monospace" font-size="10" fill="#8fff00">Security regression tests</text>
     </g>
     <g transform="translate(470, 25)">
       <text x="0" y="18" font-family="'DM Mono', monospace" font-size="10" fill="#71877b">FRONTEND CLIENT</text>
@@ -93,3 +93,4 @@
     </g>
   </g>
 </svg>
+
