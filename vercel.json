@@ -1,14 +1,18 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist/public",
-  "rewrites": [
+  "routes": [
+    { "src": "/api(?:/(.*))?", "dest": "/api" },
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
+      "src": "/projects/(finsight|ai-code-review-agent|factscope-ai)/?",
+      "dest": "/projects/$1.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+      "src": "/(admin|thank-you)/?",
+      "dest": "/app.html",
+      "headers": { "X-Robots-Tag": "noindex, nofollow" }
+    },
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/404.html", "status": 404 }
   ]
 }

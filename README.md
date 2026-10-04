@@ -1,78 +1,45 @@
-# Hamza Ali — AI/ML Engineer Portfolio
+# Hamza Ali — Interactive AI Studio
 
-An editorial portfolio and lead-intake platform showcasing production AI/ML systems, RAG architectures, agentic workflows, and LLM evaluation benchmarks.
+A dark, responsive AI engineering portfolio with project case studies, browser-local architecture explorers, a grounded assistant, and reliable client inquiry handling.
 
-## 🚀 Tech Stack
+## Stack and structure
 
-- **Frontend:** React 19, Tailwind CSS v4, Radix UI, Framer Motion, Lucide React, Wouter
-- **Backend:** Express, tRPC v11, Drizzle ORM, MySQL
-- **Tooling:** Vite 7, TypeScript, Vitest, tsx, esbuild
-- **AI Integration:** Google Gemini API / Built-in LLM Engine
+- React 19, Vite, TypeScript, Tailwind, Radix UI, Wouter, self-hosted Inter and DM Mono.
+- Express, tRPC, Drizzle, and MySQL/TiDB. Existing procedure names and input contracts are preserved.
+- `shared/portfolio.ts`: typed public project, service, biography, and evidence content. The server derives assistant context from these facts.
+- `client/src/pages`: homepage, three case studies, confirmation, owner dashboard, and Not Found.
+- `scripts/prerender.mjs`: public HTML, metadata, sitemap, and robots generation.
+- `scripts/generate-media.mjs`: optional responsive-image/share-art maintenance; generated assets are included in the repository.
 
-## ✨ Features
+## Local development
 
-- **Signal / Proof Editorial Design:** Technical documentation aesthetics with Fraunces & IBM Plex typography.
-- **Interactive AI Assistant:** Grounded AI chat assistant to answer visitor questions about Hamza''s background and skills.
-- **Lead Capture & Anti-Spam:** Project inquiry form with budget/timeline selection and rate-limited bot protection.
-- **Admin Dashboard:** Protected area for reviewing project inquiries and assistant follow-up requests.
-- **Demo & Walkthrough Embeds:** Loom/Video demo integration for featured AI products (FinSight, Factscope AI).
+Use Node 22.12+ or Node 24. Run `npm ci`, copy `.env.example` to `.env`, and configure the values you need. Start with `npm run dev` at `http://localhost:3000`.
 
-## 🛠️ Getting Started
+A database is optional for browsing. It is required for legitimate inquiries and assistant follow-ups: unavailable storage produces an error and an email fallback. The assistant can provide deterministic portfolio answers without a model key.
 
-### Prerequisites
+## Verification and production preview
 
-- Node.js >= 20.x
-- npm or pnpm
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/hamza1713/Portfolio.git
-cd Portfolio
-
-# Install dependencies
-npm install
-```
-
-### Environment Variables
-
-Copy `.env.example` to `.env` and fill in your credentials:
-
-```bash
-cp .env.example .env
-```
-
-### Development
-
-Start the development server with hot reload:
-
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:3000/`.
-
-### Testing & Typecheck
-
-```bash
-# Run TypeScript type check
+```sh
 npm run check
-
-# Run Vitest test suites
 npm test
-```
-
-### Production Build
-
-```bash
-# Build client and server bundles
 npm run build
-
-# Start production server
-npm start
+npm run test:browser
 ```
 
-## 📄 License
+Install the Chromium test browser with `npx playwright install chromium` if no browser is available. The browser suite starts a local production server and mocks API responses for interaction testing. An existing Chromium executable can be supplied using `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
+
+For a review preview, set `NODE_ENV=production` and run `npm start`. The build generates contentful HTML for `/` and `/projects/finsight`, `/projects/ai-code-review-agent`, `/projects/factscope-ai`. Unknown routes return HTTP 404. `/admin` and `/thank-you` use the client app and are excluded from indexing.
+
+Set `SITE_URL` or the Vercel production-domain variable before release. Booking and telemetry remain optional. See [release checks](docs/RELEASE-CHECKS.md) for storage, owner authentication, performance, preview deployment, and measurement details.
+
+With the production preview running, use `npm run audit:performance` to save mobile Lighthouse reports for all four public pages in `.cache/lighthouse`. Set `CHROME_PATH` to an available Chromium executable if needed; `PREVIEW_URL` can point to a deployed preview. These are lab measurements, not field Core Web Vitals.
+
+## Visitor experience
+
+The homepage introduces the work, offers product walkthroughs and three guided system explorers, describes services/process, and provides client and recruiter contact paths. Examples use local fixtures and never execute a model or accept uploads.
+
+Videos mount only after activation; below-fold images and assistant code are lazy-loaded. All public routes include distinct titles, canonical URLs, descriptions, and share images. Navigation, step controls, dialogs, and forms support keyboard use and reduced motion; zoom remains enabled.
+
+## License
 
 MIT

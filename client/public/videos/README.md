@@ -1,31 +1,21 @@
-# Project Demo Videos
+# Project walkthroughs
 
-Place a **real screen recording** of each running product in this directory — not an AI-generated mockup. A short, honest walkthrough beats a polished fake: viewers (especially technical clients) can usually tell, and this site's whole pitch is "proof, not promises."
+The portfolio uses these existing, owner-supplied recordings:
 
-1. **FinSight Demo Video**:
-   Save your video as: `finsight-demo.mp4`
-   Path: `client/public/videos/finsight-demo.mp4`
+- `Finsight.mp4` — FinSight, about 60 seconds.
+- `CodeReview.mp4` — AI Code Review Agent, about 40 seconds.
+- `Factscope.mp4` — Factscope AI, about 30 seconds.
 
-2. **Factscope AI Demo Video**:
-   Save your video as: `factscope-demo.mp4`
-   Path: `client/public/videos/factscope-demo.mp4`
+They include illustrative presentation visuals. The portfolio labels extracted images as walkthrough frames and links separately to implementation and evaluation evidence. A recording does not establish a live deployment or independent factual accuracy.
 
-### Recording it
-- Windows: `Win + G` opens the built-in Xbox Game Bar recorder (no watermark, no install).
-- Keep it short and real: 20–40 seconds of the actual UI doing the thing it does — upload a doc and ask it a question, show a claim getting verified, etc.
-- Narrate or caption briefly what's happening; you don't need production polish.
+Video elements mount only after a visitor activates the playback button. Native controls, inline mobile playback, range requests, and a helpful load-error message are preserved.
 
-### Before committing
-Compress it first — raw screen recordings are often 15–25MB, which is a slow load on a portfolio site. Re-encode with ffmpeg (H.264, CRF ~26–28 keeps text sharp while cutting size 60–75%):
+For future replacements, record the actual running interface, include captions or a transcript, and keep example data clearly identified. Update `shared/portfolio.ts` if a filename changes, then regenerate posters using `scripts/generate-media.mjs`. Responsive poster provenance is documented in `../assets/projects/README.md`.
 
-```bash
-ffmpeg -i raw-recording.mp4 -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart finsight-demo.mp4
+Use H.264/AAC MP4 with a front-loaded `moov` atom for broad browser support and efficient seeking. Keep the original elsewhere before compressing. An example maintenance command is:
+
+```sh
+ffmpeg -i original.mp4 -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart replacement.mp4
 ```
 
-### Supported formats
-- `.mp4` (H.264 video + AAC audio — widest browser compatibility)
-- `.webm`
-- Or skip local files entirely and paste a YouTube/Loom/Vimeo URL into `projectVideos` in `client/src/pages/Home.tsx` — same effect, no repo bloat.
-
-### Git & Vercel
-When you commit and push these files to your GitHub repository, Vercel automatically deploys them as static assets with native browser streaming (byte-range seeking, mobile compatible, full controls).
+Local MP4, HTTPS video, YouTube, Vimeo, and Loom sources are supported. No video is downloaded before activation.

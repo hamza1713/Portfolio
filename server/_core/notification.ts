@@ -57,58 +57,106 @@ const validatePayload = (input: NotificationPayload): NotificationPayload => {
   return { title, content };
 };
 
+export async function dispatchWebhookNotification(
+  payload: NotificationPayload,
+  targetUrl?: string
+): Promise<boolean> {
+  const url =
+    targetUrl ||
+    process.env.LEAD_NOTIFICATION_WEBHOOK ||
+    process.env.ERROR_NOTIFICATION_WEBHOOK ||
+    ENV.errorWebhook;
+  if (!url) return false;
+
+  const isDiscord = url.includes("discord.com") || url.includes("discordapp.com");
+  const isSlack = url.includes("slack.com");
+
+  let body: unknown;
+  if (isDiscord) {
+    body = {
+      embeds: [
+        {
+          title: `🎯 ${payload.title}`,
+          description: payload.content,
+          color: 0x64d8c3,
+          footer: { text: "Hamza Ali Portfolio Notification" },
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    };
+  } else if (isSlack) {
+    body = {
+      text: `*🎯 ${payload.title}*\n\n${payload.content}`,
+    };
+  } else {
+    body = {
+      title: payload.title,
+      content: payload.content,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn("[Webhook] Delivery error:", err);
+    return false;
+  }
+}
+
 /**
- * Dispatches a project-owner notification through the Manus Notification Service.
- * Returns `true` if the request was accepted, `false` when the upstream service
- * cannot be reached (callers can fall back to email/slack). Validation errors
- * bubble up as TRPC errors so callers can fix the payload.
+ * Dispatches a project-owner notification through webhooks (Discord/Slack/generic)
+ * or the Forge notification service.
+ * Returns `true` if any notification channel succeeded, `false` otherwise.
  */
 export async function notifyOwner(
   payload: NotificationPayload
 ): Promise<boolean> {
   const { title, content } = validatePayload(payload);
+  let delivered = false;
 
-  if (!ENV.forgeApiUrl) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service URL is not configured.",
-    });
+  // 1. Dispatch webhook if configured
+  if (
+    process.env.LEAD_NOTIFICATION_WEBHOOK ||
+    process.env.ERROR_NOTIFICATION_WEBHOOK ||
+    ENV.errorWebhook
+  ) {
+    const webhookOk = await dispatchWebhookNotification({ title, content });
+    if (webhookOk) delivered = true;
   }
 
-  if (!ENV.forgeApiKey) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service API key is not configured.",
-    });
-  }
+  // 2. Dispatch Forge/Manus service if configured
+  if (ENV.forgeApiUrl && ENV.forgeApiKey) {
+    try {
+      const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          authorization: `Bearer ${ENV.forgeApiKey}`,
+          "content-type": "application/json",
+          "connect-protocol-version": "1",
+        },
+        body: JSON.stringify({ title, content }),
+      });
 
-  const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
-
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        authorization: `Bearer ${ENV.forgeApiKey}`,
-        "content-type": "application/json",
-        "connect-protocol-version": "1",
-      },
-      body: JSON.stringify({ title, content }),
-    });
-
-    if (!response.ok) {
-      const detail = await response.text().catch(() => "");
-      console.warn(
-        `[Notification] Failed to notify owner (${response.status} ${response.statusText})${
-          detail ? `: ${detail}` : ""
-        }`
-      );
-      return false;
+      if (response.ok) {
+        delivered = true;
+      } else {
+        const detail = await response.text().catch(() => "");
+        console.warn(
+          `[Notification] Forge service returned ${response.status}${detail ? `: ${detail}` : ""}`
+        );
+      }
+    } catch (error) {
+      console.warn("[Notification] Error calling Forge service:", error);
     }
-
-    return true;
-  } catch (error) {
-    console.warn("[Notification] Error calling notification service:", error);
-    return false;
   }
+
+  return delivered;
 }

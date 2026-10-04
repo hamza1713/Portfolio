@@ -10,10 +10,10 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 
-function isPortAvailable(port: number): Promise<boolean> {
+function isPortAvailable(port: number, host = "0.0.0.0"): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer();
-    server.listen(port, () => {
+    server.listen(port, host, () => {
       server.close(() => resolve(true));
     });
     server.on("error", () => resolve(false));
@@ -53,8 +53,9 @@ async function startServer() {
       },
     })
   );
-  // development mode uses Vite, production mode uses static files
-  if (process.env.NODE_ENV !== "production") {
+  // If running from the compiled dist bundle, serve static assets. Otherwise, use Vite dev server.
+  const isBundled = import.meta.url.includes("/dist/") || import.meta.url.includes("\\dist\\") || process.env.NODE_ENV === "production";
+  if (!isBundled) {
     await setupVite(app, server);
   } else {
     serveStatic(app);
@@ -67,8 +68,8 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on http://localhost:${port}/ (and http://127.0.0.1:${port}/)`);
   });
 }
 
