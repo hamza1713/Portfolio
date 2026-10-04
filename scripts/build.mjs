@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import * as esbuild from "esbuild";
 
 // A local .env can set NODE_ENV=development for the dev server. Never let that
 // select React's development runtime in a release bundle or prerender build.
@@ -14,25 +15,8 @@ const steps = [
     "../dist/ssr",
   ],
   ["scripts/prerender.mjs"],
-  [
-    "node_modules/esbuild/bin/esbuild",
-    "server/api.ts",
-    "--platform=node",
-    "--packages=external",
-    "--bundle",
-    "--format=esm",
-    "--outfile=api/index.js",
-  ],
-  [
-    "node_modules/esbuild/bin/esbuild",
-    "server/_core/index.ts",
-    "--platform=node",
-    "--packages=external",
-    "--bundle",
-    "--format=esm",
-    "--outdir=dist",
-  ],
 ];
+
 for (const args of steps) {
   const result = spawnSync(process.execPath, args, {
     env: environment,
@@ -41,3 +25,23 @@ for (const args of steps) {
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
+
+await esbuild.build({
+  entryPoints: ["server/api.ts"],
+  platform: "node",
+  packages: "external",
+  bundle: true,
+  format: "esm",
+  outfile: "api/index.js",
+});
+console.log("Built api/index.js with esbuild");
+
+await esbuild.build({
+  entryPoints: ["server/_core/index.ts"],
+  platform: "node",
+  packages: "external",
+  bundle: true,
+  format: "esm",
+  outdir: "dist",
+});
+console.log("Built dist/index.js with esbuild");
