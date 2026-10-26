@@ -10,106 +10,120 @@ type MCPTool = {
 };
 
 const MCP_TOOLS: Record<string, MCPTool> = {
-  semgrep_scan_diff: {
-    name: "semgrep_scan_diff",
-    description: "Executes deterministic security and AST rules against unified pull request diffs.",
+  review_diff: {
+    name: "review_diff",
+    description: "Executes 6-pillar zero-trust review with AST taint analysis, consensus, and SARIF export.",
+    parameters: {
+      type: "object",
+      properties: {
+        diff: { type: "string", description: "Unified pull request diff hunk" },
+        repo_path: { type: "string", description: "Root workspace directory" },
+        model_family: { type: "string", enum: ["gemini-pro", "claude-sonnet", "ensemble"] },
+      },
+      required: ["diff"],
+    },
+    sampleRequest: {
+      jsonrpc: "2.0",
+      id: "call_01",
+      method: "tools/call",
+      params: {
+        name: "review_diff",
+        arguments: {
+          diff: "- @app.post('/login')\n- async def login(req: Request):\n-     if verify_creds(req):\n+ @app.post('/login')\n+ async def login(req: Request):\n+     if check_creds_async(req):\n+         return {'status': 'ok'}",
+          model_family: "ensemble",
+        },
+      },
+    },
+    sampleResponse: {
+      jsonrpc: "2.0",
+      id: "call_01",
+      result: {
+        verdict: "BLOCKING",
+        findings: [
+          {
+            rule_id: "AI-ASYNC-001",
+            severity: "CRITICAL",
+            title: "Unawaited async coroutine in conditional check",
+            description: "check_creds_async is an unawaited coroutine object that always evaluates to True in Python boolean contexts, creating a silent authentication bypass.",
+            cwe: "CWE-287",
+            taint_path: "routes/auth.py:42 -> services/auth.py:118",
+            remediation: "if await check_creds_async(req):",
+          },
+        ],
+        receipt: {
+          sha256: "e8f3a9d21c45...",
+          sarif_export: "sarif/review-run-01.sarif",
+        },
+      },
+    },
+  },
+  scan_sast_patterns: {
+    name: "scan_sast_patterns",
+    description: "Executes Tree-Sitter polyglot AST queries and deterministic SAST rules across hunks.",
     parameters: {
       type: "object",
       properties: {
         git_diff: { type: "string", description: "Unified diff chunk to analyze" },
-        ruleset: { type: "string", enum: ["security-audit", "correctness", "performance"] },
+        languages: { type: "array", items: { type: "string", enum: ["python", "typescript", "go", "java", "rust"] } },
       },
       required: ["git_diff"],
     },
     sampleRequest: {
       jsonrpc: "2.0",
-      id: "call_01",
+      id: "call_02",
       method: "tools/call",
       params: {
-        name: "semgrep_scan_diff",
+        name: "scan_sast_patterns",
         arguments: {
-          git_diff: "- os.system('echo ' + user_input)\n+ subprocess.run(['echo', user_input], check=True)",
-          ruleset: "security-audit",
+          git_diff: "+ import flask_auth_helpers\n+ result = subprocess.run(f'nslookup {user_domain}', shell=True)",
+          languages: ["python"],
         },
       },
     },
     sampleResponse: {
       jsonrpc: "2.0",
-      id: "call_01",
+      id: "call_02",
       result: {
-        content: [
+        findings: [
           {
-            type: "text",
-            text: "Deterministic AST scanner: 0 high-severity vulnerabilities in revised chunk. Deprecated unsanitized shell concatenation resolved.",
+            rule_id: "SEC-SLOPSQUAT-001",
+            severity: "CRITICAL",
+            badge: "SLOPSQUATTING_DETECTED",
+            message: "Package 'flask_auth_helpers' does not exist in PyPI or OSV database. Hallucinated dependency import blocked.",
           },
-        ],
-        structured_findings: [
           {
-            rule_id: "python.lang.security.audit.dangerous-system-call",
-            status: "RESOLVED",
+            rule_id: "SEC-003",
             severity: "HIGH",
-            badge: "REPRODUCED",
+            badge: "COMMAND_INJECTION",
+            message: "subprocess.run with shell=True receiving unsanitized variable user_domain.",
           },
         ],
+        total_issues: 2,
       },
     },
   },
-  generate_regression_test: {
-    name: "generate_regression_test",
-    description: "Synthesizes an isolated test harness in a sandbox to verify whether a candidate defect reproduces.",
+  find_impacted_callers: {
+    name: "find_impacted_callers",
+    description: "Traverses inter-procedural AST callgraphs to identify multi-hop downstream callers.",
     parameters: {
       type: "object",
       properties: {
-        vulnerability_type: { type: "string" },
-        target_function: { type: "string" },
-        context: { type: "string" },
+        symbol: { type: "string", description: "Function, class, or method signature modified" },
+        file_path: { type: "string", description: "Origin file path" },
+        max_depth: { type: "number", default: 3 },
       },
-      required: ["vulnerability_type", "target_function"],
-    },
-    sampleRequest: {
-      jsonrpc: "2.0",
-      id: "call_02",
-      method: "tools/call",
-      params: {
-        name: "generate_regression_test",
-        arguments: {
-          vulnerability_type: "command-injection",
-          target_function: "execute_cli_query",
-          context: "Parameter user_input contains semicolon delimiter",
-        },
-      },
-    },
-    sampleResponse: {
-      jsonrpc: "2.0",
-      id: "call_02",
-      result: {
-        test_code: "def test_command_injection_reproduction():\n    with pytest.raises(SecurityException):\n        execute_cli_query('test; rm -rf /')\n",
-        execution_status: "VERIFIED_FAILING_ON_OLD_CODE",
-        evidence_badge: "REPRODUCED",
-        sandbox_exit_code: 1,
-      },
-    },
-  },
-  ast_callgraph_impact: {
-    name: "ast_callgraph_impact",
-    description: "Traverses the abstract syntax tree to identify downstream callers affected by a signature change.",
-    parameters: {
-      type: "object",
-      properties: {
-        modified_symbol: { type: "string" },
-        depth: { type: "number", default: 2 },
-      },
-      required: ["modified_symbol"],
+      required: ["symbol", "file_path"],
     },
     sampleRequest: {
       jsonrpc: "2.0",
       id: "call_03",
       method: "tools/call",
       params: {
-        name: "ast_callgraph_impact",
+        name: "find_impacted_callers",
         arguments: {
-          modified_symbol: "createProjectInquiry",
-          depth: 2,
+          symbol: "execute_sandboxed_query",
+          file_path: "services/analytics.py",
+          max_depth: 3,
         },
       },
     },
@@ -117,20 +131,98 @@ const MCP_TOOLS: Record<string, MCPTool> = {
       jsonrpc: "2.0",
       id: "call_03",
       result: {
-        symbol: "createProjectInquiry",
-        impacted_nodes: [
-          "server.routers.projectInquiry.submit",
-          "server.adminLeads.listProjectInquiries",
+        target: "services.analytics.execute_sandboxed_query",
+        callers: [
+          { caller: "api.routes.query_endpoint", hop: 1, file: "api/routes.py:84" },
+          { caller: "jobs.periodic_evaluator.run_cycle", hop: 2, file: "jobs/worker.py:120" },
         ],
-        breaking_changes_detected: false,
-        total_references: 4,
+        contract_drift_detected: false,
+        total_references: 6,
+      },
+    },
+  },
+  check_governance_rules: {
+    name: "check_governance_rules",
+    description: "Evaluates repository .code-review.yaml constraints, banned dependencies, and required approvals.",
+    parameters: {
+      type: "object",
+      properties: {
+        config_path: { type: "string", default: ".code-review.yaml" },
+        pr_author: { type: "string" },
+        changed_files: { type: "array", items: { type: "string" } },
+      },
+      required: ["changed_files"],
+    },
+    sampleRequest: {
+      jsonrpc: "2.0",
+      id: "call_04",
+      method: "tools/call",
+      params: {
+        name: "check_governance_rules",
+        arguments: {
+          config_path: ".code-review.yaml",
+          pr_author: "contractor_dev",
+          changed_files: ["services/auth.py", "requirements.txt"],
+        },
+      },
+    },
+    sampleResponse: {
+      jsonrpc: "2.0",
+      id: "call_04",
+      result: {
+        compliant: false,
+        violations: [
+          {
+            policy: "GOV-AUTH-001",
+            level: "BLOCKING",
+            message: "Changes to services/auth.py require sign-off from @security-leads.",
+          },
+        ],
+        required_approvals: ["@security-leads"],
+      },
+    },
+  },
+  generate_unit_tests: {
+    name: "generate_unit_tests",
+    description: "Generates assertion-locked pytest reproduction suites and verifies failure in isolated Docker containers.",
+    parameters: {
+      type: "object",
+      properties: {
+        vulnerability_id: { type: "string" },
+        target_file: { type: "string" },
+        reproduction_vector: { type: "string" },
+      },
+      required: ["vulnerability_id", "target_file"],
+    },
+    sampleRequest: {
+      jsonrpc: "2.0",
+      id: "call_05",
+      method: "tools/call",
+      params: {
+        name: "generate_unit_tests",
+        arguments: {
+          vulnerability_id: "AI-ASYNC-001",
+          target_file: "services/auth.py",
+          reproduction_vector: "mock_coroutine_returning_false",
+        },
+      },
+    },
+    sampleResponse: {
+      jsonrpc: "2.0",
+      id: "call_05",
+      result: {
+        test_file: "tests/repro_ai_async_001.py",
+        docker_exit_code: 1,
+        status: "REPRODUCED",
+        ast_assertions_locked: true,
+        summary: "Reproduction test failed as expected on vulnerable commit (exit code 1). Ready for patch validation.",
       },
     },
   },
 };
 
 export function MCPInspector() {
-  const [activeTool, setActiveTool] = useState<string>("semgrep_scan_diff");
+  const [activeTool, setActiveTool] = useState<string>("review_diff");
   const [viewMode, setViewMode] = useState<"payload" | "schema">("payload");
   const [simulated, setSimulated] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -153,12 +245,12 @@ export function MCPInspector() {
       <div className="mcp-header">
         <div className="mcp-title-wrap">
           <span className="status-tag">
-            <Server size={14} className="text-primary" />
+            <Server size={14} className="text-[#64D8C3]" />
             <span>Model Context Protocol (MCP)</span>
           </span>
           <h3>Interactive Agent Tool & JSON-RPC Protocol Explorer</h3>
           <p className="mcp-subtitle">
-            Inspect the live tool schemas, JSON-RPC 2.0 messages, and execution traces that connect Hamza’s AI review agents to editor and repository workflows.
+            Inspect the live tool schemas, JSON-RPC 2.0 messages, and execution traces that connect Hamza’s AI review agents directly to IDEs (Claude Code, Cursor) and CI/CD pipelines.
           </p>
         </div>
       </div>
@@ -168,7 +260,7 @@ export function MCPInspector() {
         <div className="mcp-sidebar">
           <p className="mcp-nav-label">Registered MCP Server Tools</p>
           <div className="mcp-tools-list">
-            {Object.keys(MCP_TOOLS).map(key => {
+            {Object.keys(MCP_TOOLS).map((key) => {
               const item = MCP_TOOLS[key];
               const isSelected = activeTool === key;
               return (
@@ -193,7 +285,7 @@ export function MCPInspector() {
 
           <div className="mcp-spec-badge">
             <span>JSON-RPC 2.0 Spec Compatible</span>
-            <p>Runs within CrewAI & MCP Server harnesses.</p>
+            <p>Runs within Claude Code, Cursor & MCP Server harnesses.</p>
           </div>
         </div>
 

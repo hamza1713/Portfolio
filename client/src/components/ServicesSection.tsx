@@ -8,15 +8,15 @@ export function ServicesSection({
 }) {
   const serviceCards = [
     {
-      title: "Done-For-You Multi-Agent Swarms & Workflows",
-      projectType: "Agentic workflow / evaluation" as ProjectType,
+      title: "Zero-Trust Multi-Agent Swarms & Workflows",
+      projectType: "AI agent / workflow" as ProjectType,
       icon: Bot,
       description:
-        "Custom autonomous multi-agent pipelines orchestrated with CrewAI and Model Context Protocol (MCP). Your agents collaborate across isolated boundaries with zero hallucinated side-effects.",
+        "Custom autonomous multi-agent pipelines orchestrated with CrewAI and Model Context Protocol (MCP). Your agents collaborate across isolated boundaries with deterministic AST validation and zero hallucinated side-effects.",
       deliverables: [
         "CrewAI multi-agent swarms with specialized role definitions",
         "Model Context Protocol (MCP) JSON-RPC 2.0 tool servers",
-        "Deterministic AST callgraph analysis and regression generation",
+        "Deterministic AST callgraph analysis & sandboxed reproduction",
         "Production FastAPI backend & documented deployment handover",
       ],
     },
@@ -28,21 +28,21 @@ export function ServicesSection({
         "Production-grade document intelligence with multi-tenant department RBAC. Your proprietary data stays compartmentalized, fully cited, and verified against grounded evidence.",
       deliverables: [
         "ChromaDB & DuckDB hybrid dense/sparse vector retrieval",
-        "Multi-tenant department isolation with 100% RBAC compliance",
-        "RAGAS benchmark evaluation (0.94+ faithfulness score)",
+        "3-layer defensive RBAC with 100% boundary compliance",
+        "RAGAS benchmark evaluation (0.894+ context relevancy score)",
         "Streaming sentence citations mapped to exact source pages",
       ],
     },
     {
-      title: "LLM Cost Optimization, Semantic Caching & Evals",
-      projectType: "Other AI product work" as ProjectType,
+      title: "LLM Cost Optimization, Role Caching & Evals",
+      projectType: "Other AI engineering work" as ProjectType,
       icon: Zap,
       description:
-        "Eliminate wasteful token spend and latency bottlenecks. Dual-tier semantic caching slashes recurring LLM bills by up to 45%, backed by automated ground-truth evaluation harnesses.",
+        "Eliminate wasteful token spend and latency bottlenecks. Role-scoped Redis 7 caching slashes recurring LLM bills and delivers sub-20ms streaming replay on duplicate queries.",
       deliverables: [
-        "Dual-tier semantic similarity caching (Redis + DuckDB)",
-        "P95 latency waterfall profiling (TTFT + token generation)",
-        "Automated regression test suites and safety guardrails",
+        "Sub-20ms Redis 7 role-scoped streaming replay cache",
+        "In-memory DuckDB analytical sandbox with disk access blocked",
+        "Automated regression test suites and OWASP guardrails",
         "Live cost monitoring dashboards & budget alert thresholds",
       ],
     },

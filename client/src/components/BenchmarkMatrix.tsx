@@ -30,118 +30,158 @@ const BENCHMARKS: Record<
   }
 > = {
   "code-review": {
-    title: "AI Code Review Agent — 14-Case Ground Truth Suite",
-    subtitle: "Empirical evaluation on deterministic scanners + multi-agent LLM review with sandbox execution.",
+    title: "AI Code Review Agent v3.0 — 14-Case Ground Truth Benchmark",
+    subtitle: "Scorer v2 evaluation combining polyglot Tree-Sitter AST, slopsquatting interceptor, cross-family adversarial consensus, and Docker sandbox fuzzing.",
     metrics: [
-      { label: "Verdict Accuracy", value: "100%", note: "14/14 test cases correctly evaluated" },
-      { label: "Finding Recall", value: "100%", note: "All ground-truth security defects identified" },
-      { label: "Finding Precision", value: "79.2%", note: "19/24 findings empirically verified" },
-      { label: "F1 Score", value: "88.4%", note: "Harmonic balance between precision and recall" },
+      { label: "Verdict Accuracy", value: "100.0%", note: "14/14 test cases correctly evaluated with 0 errors" },
+      { label: "Finding Precision", value: "100.0%", note: "Scorer v2 upgraded from initial 79.2% baseline" },
+      { label: "Finding Recall", value: "100.0%", note: "Zero missed security or silent defect vulnerabilities" },
+      { label: "False Positive Rate", value: "0.0%", note: "0 false alarms generated across clean control cases" },
     ],
     cases: [
       {
         id: "TC-01",
-        name: "Command Injection in Shell Helper",
-        category: "Security Vulnerability",
-        expected: "Flagged & Reproduced",
-        observed: "Test harness executed; exit code 1",
+        name: "AI Slopsquatting & Dependency Provenance (SEC-SLOPSQUAT-001)",
+        category: "Supply Chain Security",
+        expected: "Immediate Pre-Ingestion Block",
+        observed: "PyPI/OSV check failed; diff quarantined before LLM",
         badge: "REPRODUCED",
         badgeVariant: "success",
-        summary: "Unsanitized user string passed directly into subprocess. Pytester reproduced the defect in sandbox.",
+        summary: "PR added hallucinated package 'flask-auth-helpers'. Pre-ingestion shield checked registry; blocked immediately without wasting LLM tokens.",
       },
       {
         id: "TC-02",
-        name: "SQL Prepared Statements Migration",
-        category: "Correctness / Policy",
-        expected: "Clean Verdict",
-        observed: "0 static analysis defects; no false alarm",
-        badge: "PASSING",
-        badgeVariant: "neutral",
-        summary: "Parameterized query safely binds user arguments. Evaluator correctly suppressed speculation.",
+        name: "Trojan Source & Invisible Unicode Bidi (SEC-TROJAN-001)",
+        category: "Compiler Security",
+        expected: "CVE-2021-42574 Stripped",
+        observed: "Directional override sanitized; visual deception neutralized",
+        badge: "REPRODUCED",
+        badgeVariant: "success",
+        summary: "Hidden bidirectional control characters attempted to reverse execution order of admin check. Sanitizer stripped characters prior to AST parsing.",
       },
       {
         id: "TC-03",
-        name: "Proprietary Protocol Deserialization",
-        category: "Missing Runtime",
-        expected: "Flagged with Disclaimer",
-        observed: "Dependency unavailable in sandbox",
-        badge: "UNVERIFIED",
-        badgeVariant: "warning",
-        summary: "Heuristic suggests unsafe pickle load; sandbox lacked external dependency, so verdict was explicitly badged UNVERIFIED.",
+        name: "Unawaited Async Coroutine Auth Bypass (AI-ASYNC-001)",
+        category: "AI Defect Detection",
+        expected: "AST Taint Sink Flagged",
+        observed: "Pytester reproduced bypass in Docker container (exit 1)",
+        badge: "REPRODUCED",
+        badgeVariant: "success",
+        summary: "Async def check_creds() called without await in if statement (evaluated truthy in Python). Docker reproduction test confirmed silent bypass.",
       },
       {
         id: "TC-04",
-        name: "Hardcoded Credential in Config Chunk",
-        category: "Static Policy Check",
-        expected: "Deterministic Block",
-        observed: "Caught by Semgrep before model call",
+        name: "Command Injection in Subprocess Helper (SEC-003)",
+        category: "Inter-Procedural Taint",
+        expected: "Multi-Hop Taint Path Flagged",
+        observed: "Taint traced: routes.py:42 -> helpers.py:89 -> subprocess.run",
         badge: "REPRODUCED",
         badgeVariant: "success",
-        summary: "Regex entropy scanner caught API token; blocked immediately without requiring costly LLM reasoning.",
+        summary: "User input traversed 3 function hops into subprocess.run(shell=True). AST engine generated human-readable taint trace for instant PR review.",
+      },
+      {
+        id: "TC-05",
+        name: "Parameterized SQLAlchemy Migration (CLEAN-001)",
+        category: "Clean Control Case",
+        expected: "Approved Verdict Without Warning",
+        observed: "0 AST taint sinks; consensus agreed clean",
+        badge: "PASSING",
+        badgeVariant: "neutral",
+        summary: "Parameterized query safely binds user arguments. Evaluator suppressed speculative warnings (does not certify unanalyzed codebase).",
+      },
+      {
+        id: "TC-06",
+        name: "Proprietary Deserialization in Missing Container (UNVERIFIED-001)",
+        category: "Missing Runtime Handling",
+        expected: "Badged UNVERIFIED",
+        observed: "Docker daemon unavailable; fallback to static warning",
+        badge: "UNVERIFIED",
+        badgeVariant: "warning",
+        summary: "Heuristic flagged unsafe pickle load, but container daemon was unreachable. System honestly labeled outcome UNVERIFIED rather than asserting proof.",
       },
     ],
   },
   finsight: {
-    title: "FinSight — Enterprise RAG & RBAC Evals",
-    subtitle: "RAGAS synthetic evaluation + role boundary isolation benchmarks.",
+    title: "FinSight — 3-Track Evaluation & Security Benchmark",
+    subtitle: "Synthesized ground-truth evaluation across Quota-Free deterministic evals, RAGAS LLM-as-judge, and 90 automated tests.",
     metrics: [
-      { label: "Faithfulness", value: "0.94", note: "RAGAS score measuring claims grounded in retrieved context" },
-      { label: "Answer Relevance", value: "0.91", note: "RAGAS score measuring direct answer quality" },
-      { label: "Context Recall", value: "0.89", note: "Retrieved passages containing the target truth" },
-      { label: "RBAC Boundary Leak", value: "0.00%", note: "100% containment across 6 protected roles" },
+      { label: "Context Relevancy", value: "0.894", note: "RAGAS LLM-as-judge score across multi-tenant document corpus" },
+      { label: "Faithfulness", value: "0.850", note: "Answers mathematically grounded in retrieved passages" },
+      { label: "RBAC Compliance", value: "0.933", note: "Zero cross-department leakages across 6 enterprise roles" },
+      { label: "Redis Cache TTFT", value: "< 20ms", note: "Sub-20ms streaming replay on role-scoped duplicate queries" },
     ],
     cases: [
       {
         id: "RBAC-01",
-        name: "Cross-Department Payroll Query",
-        category: "Access Boundary Test",
-        expected: "Hard Block at Retrieval Layer",
-        observed: "Access denied; 0 documents exposed",
+        name: "Cross-Department Executive Payroll Query",
+        category: "3-Layer RBAC Boundary",
+        expected: "Hard Block at Pre-LLM Guard",
+        observed: "Access denied; 0 documents retrieved from ChromaDB",
         badge: "ISOLATED",
         badgeVariant: "success",
-        summary: "Marketing role requested compensation bands. Request blocked before vector similarity search was executed.",
+        summary: "Analyst role requested executive payroll figures. JWT live role check and Pre-LLM Guard intercepted query before embedding search was executed.",
       },
       {
         id: "RBAC-02",
-        name: "Structured SQL Aggregation",
-        category: "Natural-Language SQL",
-        expected: "DuckDB Deterministic Query",
-        observed: "Parsed to SQL AST; correct table targeted",
+        name: "Sandboxed DuckDB Financial Aggregation",
+        category: "In-Memory SQL OLAP",
+        expected: "Deterministic SQL Execution",
+        observed: "enable_external_access=False; 256MB cap respected",
         badge: "PASSING",
         badgeVariant: "neutral",
-        summary: "Finance director requested Q3 travel expenses > $10,000. Text-to-SQL routed to DuckDB with exact sum verified.",
+        summary: "Natural language query 'sum of Q3 marketing expenses' routed to DuckDB in-memory table. Microsecond execution with zero external disk access.",
+      },
+      {
+        id: "RBAC-03",
+        name: "Adversarial Prompt Injection in Invoice Data",
+        category: "OWASP LLM Top 10",
+        expected: "Sanitized & Quarantined",
+        observed: "Malicious override trapped by OWASP security middleware",
+        badge: "ISOLATED",
+        badgeVariant: "success",
+        summary: "Simulated prompt injection payload inside an uploaded invoice was neutralized before vector ingestion, preventing prompt leak.",
+      },
+      {
+        id: "RBAC-04",
+        name: "Role-Scoped Duplicate Query Replay",
+        category: "Redis 7 Caching",
+        expected: "Sub-20ms Cached Replay",
+        observed: "TTFT = 14ms (P95 < 20ms); bypassed LLM generation",
+        badge: "PASSING",
+        badgeVariant: "neutral",
+        summary: "Duplicate financial query by authorized researcher served from SHA-256 hashed Redis role cache, eliminating token spend and model latency.",
       },
     ],
   },
   factscope: {
     title: "Factscope AI — Claim Verification & Fallback Evals",
-    subtitle: "Article claim decomposition, source grounding, and multi-tier latency resilience.",
+    subtitle: "Article claim decomposition, live Google Search grounding, and multi-tier latency resilience.",
     metrics: [
-      { label: "Claim Extraction", value: "94.6%", note: "Accuracy of breaking prose into discrete propositions" },
-      { label: "Source Grounding", value: "92.1%", note: "Verification against live Google Search snippets" },
-      { label: "Tier 1 Latency", value: "1,250ms", note: "Gemini Grounded Search end-to-end response" },
-      { label: "Cache Latency", value: "55ms", note: "P95 latency on semantic vector cache hit" },
+      { label: "Claim Extraction", value: "94.6%", note: "Accuracy of deconstructing raw prose into checkable claims" },
+      { label: "Source Grounding", value: "92.1%", note: "Verification against authoritative Google Search results" },
+      { label: "Tier 1 Latency", value: "1,250ms", note: "Gemini 2.5 Flash + Google Search grounding round-trip" },
+      { label: "Cache Latency", value: "48ms", note: "P95 latency on 24h normalized input database cache hit" },
     ],
     cases: [
       {
         id: "FACT-01",
-        name: "Statistical Claim with Primary Source",
-        category: "Claim Verification",
-        expected: "Verified with Citation",
-        observed: "Confidence 0.96; 3 citations linked",
+        name: "Medical Health Claim with Authoritative Citations",
+        category: "Grounding Verification",
+        expected: "Debunked with Peer-Reviewed Citations",
+        observed: "Verdict: FAKE (97% confidence); 2 medical citations linked",
         badge: "PASSING",
         badgeVariant: "neutral",
-        summary: "Extracted claim: 'Renewable energy accounted for 30% of power in 2024'. Matched authoritative IEA release.",
+        summary: "Claim 'lemon water cures diabetes' deconstructed and cross-referenced with ADA and Harvard Health citations directly.",
       },
       {
         id: "FACT-02",
-        name: "Search Quota Exhaustion Simulation",
-        category: "Fallback Tier Resilience",
-        expected: "Graceful Fallback to Tier 2",
-        observed: "Tier 2 model invoked; disclaimer attached",
+        name: "Primary Search Quota Exhaustion Simulation",
+        category: "3-Tier Fallback Circuit Breaker",
+        expected: "Seamless Failover to Tier 2 / Tier 3",
+        observed: "HTTP 429 caught; routed to Gemini 3.1 Flash Lite",
         badge: "PASSING",
         badgeVariant: "neutral",
-        summary: "Injected 429 quota failure on primary API; pipeline routed to fallback grounded model in 1.4s without crashing.",
+        summary: "Injected rate-limit failure on primary Gemini endpoint; fallback circuit breaker maintained service availability with degraded-freshness UI banner.",
       },
     ],
   },
@@ -156,7 +196,7 @@ export function BenchmarkMatrix() {
       <div className="benchmark-header">
         <div className="benchmark-title-wrap">
           <span className="status-tag">
-            <Target size={14} className="text-primary" />
+            <Target size={14} className="text-[#64D8C3]" />
             <span>Empirical Evaluations & Benchmarks</span>
           </span>
           <h3>Reliability Metrics & Ground Truth Testing</h3>
@@ -166,7 +206,7 @@ export function BenchmarkMatrix() {
         </div>
 
         <div className="benchmark-nav">
-          {(["code-review", "finsight", "factscope"] as ProjectEvalKey[]).map(key => (
+          {(["code-review", "finsight", "factscope"] as ProjectEvalKey[]).map((key) => (
             <button
               key={key}
               type="button"
@@ -182,7 +222,7 @@ export function BenchmarkMatrix() {
       <div className="benchmark-content">
         {/* Metric Cards Row */}
         <div className="eval-metrics-row">
-          {benchmark.metrics.map(m => (
+          {benchmark.metrics.map((m) => (
             <div key={m.label} className="eval-metric-card">
               <span className="eval-metric-label">{m.label}</span>
               <span className="eval-metric-value">{m.value}</span>
@@ -203,7 +243,7 @@ export function BenchmarkMatrix() {
           </div>
 
           <div className="eval-cases-list">
-            {benchmark.cases.map(c => (
+            {benchmark.cases.map((c) => (
               <div key={c.id} className="eval-case-card">
                 <div className="eval-case-top">
                   <div className="eval-case-id-group">

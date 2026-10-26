@@ -11,6 +11,8 @@ import {
   Cpu,
   Layers,
   Terminal,
+  Code2,
+  FileCheck,
 } from "lucide-react";
 import { profile } from "@shared/portfolio";
 import { HeroWordRotator } from "./HeroWordRotator";
@@ -20,22 +22,32 @@ export function HeroSection() {
 
   const stages = [
     {
-      name: "Retrieve",
-      icon: Workflow,
-      note: "Department-isolated vector & full-text hybrid search.",
-      code: "documents → verified candidate context",
-    },
-    {
-      name: "Reason",
-      icon: Sparkles,
-      note: "Multi-agent swarm delegation via Model Context Protocol.",
-      code: "context + tools → deterministic execution",
-    },
-    {
-      name: "Verify",
+      name: "Shield",
       icon: ShieldCheck,
-      note: "Automated RAGAS faithfulness & ground-truth validation.",
-      code: "response → 0.94 faithfulness check",
+      badge: "Pre-Ingestion",
+      note: "Neutralizes Unicode Bidi overrides (CVE-2021-42574) & verifies package provenance against PyPI/npm to block AI slopsquatting.",
+      code: "diff payload → Bidi stripped + PyPI/OSV verified",
+    },
+    {
+      name: "Analyze",
+      icon: Code2,
+      badge: "Polyglot AST",
+      note: "Extracts compiler-grade ASTs across 6 languages (Python, TS, Go, Java, Rust) and traces inter-procedural taint flows from source to sink.",
+      code: "Tree-Sitter AST → inter-procedural taint graph",
+    },
+    {
+      name: "Adversarial",
+      icon: Sparkles,
+      badge: "Cross-Family",
+      note: "Pairs Gemini 2.5 Pro with Claude 3.7 Sonnet as an orthogonal red-team critic to eliminate shared blind spots via consensus telemetry.",
+      code: "Gemini (Gen) + Claude (Critic) → consensus vote",
+    },
+    {
+      name: "Attest",
+      icon: FileCheck,
+      badge: "Sandbox Proof",
+      note: "Mounts head_sha in an isolated Docker container for pytest fuzzing, stamping SHA-256 receipts and exporting OASIS SARIF v2.1.0.",
+      code: "Docker sandbox → SHA-256 receipt + SARIF 2.1.0",
     },
   ];
 
@@ -61,28 +73,36 @@ export function HeroSection() {
             <span className="text-neutral-500">$</span>
             <span>whoami</span>
             <span className="text-neutral-400">
-              — Hamza Ali · Applied GenAI & Multi-Agent Architect · Pakistan
+              — Hamza Ali · Applied GenAI & Systems Engineer · Pakistan
             </span>
           </p>
 
           {/* Headline with dynamic rotating word */}
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08]">
-            AI Systems that stay <br className="hidden sm:inline" />
+            <span className="sr-only">Useful intelligence — </span>
+            AI Systems with <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-100 to-[#64D8C3]/80">
+              deterministic proofs.
+            </span>
+          </h1>
+
+          <div className="mt-4 flex items-center gap-2 font-mono text-xs sm:text-sm text-neutral-400">
+            <span>Engineering AI architectures that stay</span>
             <HeroWordRotator
               words={[
                 "grounded.",
                 "autonomous.",
-                "cost-lean.",
+                "tamper-proof.",
                 "observable.",
                 "production-ready.",
               ]}
             />
-          </h1>
+          </div>
 
           {/* Glassmorphic Callout Card */}
           <div className="mt-8 rounded-2xl backdrop-blur-md bg-white/[0.03] border border-white/10 p-5 max-w-2xl">
             <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
-              I design, build, and evaluate production-grade GenAI platforms and multi-agent swarms — from enterprise RAG with strict department RBAC to autonomous code review agents executing deterministic AST security scans. Done-for-you AI engineering with inspectable evals.
+              I architect zero-trust multi-agent systems and enterprise RAG platforms — from polyglot Tree-Sitter AST taint graphs and AI slopsquatting defenses to 3-layer RBAC retrieval with in-memory DuckDB sandboxes and sub-20ms Redis stream replay. Deterministic engineering with inspectable evals.
             </p>
           </div>
 
@@ -153,7 +173,7 @@ export function HeroSection() {
             <span className="text-neutral-600" aria-hidden="true">
               |
             </span>
-            {["CrewAI", "Model Context Protocol", "FastAPI", "Gemini", "RAGAS", "ChromaDB", "DuckDB", "Docker"].map(
+            {["Tree-Sitter AST", "Model Context Protocol", "CrewAI", "FastAPI", "Redis 7", "DuckDB", "RAGAS", "SARIF 2.1.0"].map(
               (t) => (
                 <span
                   key={t}
@@ -177,7 +197,7 @@ export function HeroSection() {
                 <Terminal size={14} /> AI Topology Canvas
               </span>
               <span className="font-mono text-[10px] text-neutral-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
-                Active Runtime
+                Pillar 0{activeStage + 1}
               </span>
             </div>
 
@@ -187,36 +207,36 @@ export function HeroSection() {
                 <CurrentIcon size={32} className="text-[#64D8C3] animate-pulse" />
               </div>
               <p className="font-mono text-[11px] text-[#64D8C3] uppercase tracking-wider">
-                Layer 0{activeStage + 1}
+                {stages[activeStage].badge} Engine
               </p>
               <h3 className="font-display text-xl font-bold text-white mt-0.5">
-                {stages[activeStage].name} Phase
+                {stages[activeStage].name} Pipeline
               </h3>
               <p className="font-mono text-xs text-neutral-400 mt-1 max-w-xs">
                 {stages[activeStage].code}
               </p>
             </div>
 
-            {/* 3 Interactive Stepper Buttons */}
-            <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10">
+            {/* 4 Interactive Stepper Buttons */}
+            <div className="grid grid-cols-4 gap-1.5 pt-4 border-t border-white/10">
               {stages.map((stage, idx) => (
                 <button
                   key={stage.name}
                   type="button"
                   onClick={() => setActiveStage(idx)}
-                  className={`hero-step-btn py-2 px-2 rounded-xl font-mono text-xs flex flex-col items-center justify-center gap-0.5 transition-all ${
+                  className={`hero-step-btn py-2 px-1 sm:px-2 rounded-xl font-mono text-xs flex flex-col items-center justify-center gap-0.5 transition-all ${
                     activeStage === idx
                       ? "border border-[#64D8C3]/60 bg-[#64D8C3]/15 text-[#64D8C3] font-bold shadow-[0_0_15px_rgba(100,216,195,0.2)]"
                       : "border border-white/10 bg-white/[0.02] text-neutral-400 hover:text-white hover:border-white/20"
                   }`}
                 >
                   <span className="text-[10px] opacity-70">0{idx + 1}</span>
-                  <span className="whitespace-nowrap font-medium text-[11px] sm:text-xs">{stage.name}</span>
+                  <span className="whitespace-nowrap font-medium text-[10px] sm:text-xs">{stage.name}</span>
                 </button>
               ))}
             </div>
 
-            <p className="mt-4 text-center font-mono text-[11px] text-neutral-400 min-h-[32px] flex items-center justify-center" aria-live="polite">
+            <p className="mt-4 text-center font-mono text-[11px] text-neutral-400 min-h-[44px] flex items-center justify-center" aria-live="polite">
               {stages[activeStage].note}
             </p>
 
@@ -227,7 +247,7 @@ export function HeroSection() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="font-mono text-xs text-neutral-200">
-                available for new projects
+                available for new projects & roles
               </span>
             </div>
           </div>
@@ -239,30 +259,30 @@ export function HeroSection() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="lg:border-l border-white/10 first:border-l-0 px-2 sm:px-6">
-              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">3</dd>
+              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">100.0%</dd>
               <dt className="mt-1 text-xs sm:text-sm text-neutral-400">
-                Production AI platforms built & open-source
+                Benchmark F1 & verdict accuracy (14 ground-truth CWEs)
               </dt>
             </div>
 
             <div className="lg:border-l border-white/10 px-2 sm:px-6">
-              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">100%</dd>
+              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">90+ Tests</dd>
               <dt className="mt-1 text-xs sm:text-sm text-neutral-400">
-                Grounded benchmark verdict accuracy (14 cases)
+                Automated regression & RBAC security test suites
               </dt>
             </div>
 
             <div className="lg:border-l border-white/10 px-2 sm:px-6">
-              <dd className="font-display text-3xl sm:text-4xl font-bold text-[#64D8C3]">45%</dd>
+              <dd className="font-display text-3xl sm:text-4xl font-bold text-[#64D8C3]">&lt; 20ms</dd>
               <dt className="mt-1 text-xs sm:text-sm text-neutral-400">
-                LLM token cost reduction via semantic caching
+                Redis 7 role-scoped cache streaming replay
               </dt>
             </div>
 
             <div className="lg:border-l border-white/10 px-2 sm:px-6">
-              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">&lt; 1.2s</dd>
+              <dd className="font-display text-3xl sm:text-4xl font-bold text-white">0.894</dd>
               <dt className="mt-1 text-xs sm:text-sm text-neutral-400">
-                P95 multi-agent execution cycle latency
+                RAGAS LLM-as-judge context relevancy score
               </dt>
             </div>
           </dl>

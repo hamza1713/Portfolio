@@ -7,6 +7,8 @@ import {
   Cpu,
   Database,
   Lock,
+  Code2,
+  Terminal,
 } from "lucide-react";
 
 export function ArchitectureSection() {
@@ -15,90 +17,83 @@ export function ArchitectureSection() {
   const layers = [
     {
       id: "agents",
-      number: "L0 // AGENT SWARMS & MCP",
-      title: "Multi-Agent Swarms & MCP Execution",
-      tag: "CrewAI · MCP · Python",
+      number: "L0 // ZERO-TRUST REVIEW & POLYGLOT AST",
+      title: "Polyglot AST & Cross-Family Adversarial Ensembles",
+      tag: "Tree-Sitter · Gemini + Claude · SARIF 2.1.0",
       description:
-        "Specialized agents collaborate across isolated duties. The Model Context Protocol (MCP) coordinates AST security scans, regression tests, and tool execution without hallucinated side effects.",
+        "Combines compiler-grade Tree-Sitter AST taint graphs across 6 languages with pre-ingestion slopsquatting interceptors, orthogonal red-team critics (Gemini 2.5 Pro + Claude 3.7 Sonnet), containerized pytest fuzzing, and signed SARIF 2.1.0 receipts.",
       bullets: [
-        "CrewAI multi-agent hierarchical swarms",
-        "MCP JSON-RPC 2.0 tool execution",
-        "Deterministic AST callgraph analysis",
-        "Sandboxed reproduction & SARIF export",
+        "Tree-Sitter AST & inter-procedural taint flow graph",
+        "Pre-ingestion slopsquatting & Unicode Bidi defense",
+        "Cross-family adversarial consensus (Gemini + Claude)",
+        "Docker sandbox fuzzing & OASIS SARIF 2.1.0 attestation",
       ],
-      icon: Layers,
+      icon: Code2,
       preview: {
-        headline: "Deterministic Swarm Topology",
-        stat1: "14/14",
-        stat1Label: "Benchmark Cases Passed",
-        stat2: "< 1.2s",
-        stat2Label: "Agent Cycle Latency",
-        codeSnippet: `POST /mcp/v1/tools/call
-{
-  "jsonrpc": "2.0",
-  "method": "tools/call",
-  "params": {
-    "name": "ast_callgraph_impact",
-    "arguments": { "scope": "diff", "max_depth": 3 }
-  }
-}
-→ Result: 0 regressions, verified clean`,
+        headline: "Deterministic AST & Adversarial Telemetry",
+        stat1: "100.0%",
+        stat1Label: "Benchmark F1 (14 CWEs)",
+        stat2: "0.0%",
+        stat2Label: "False Positive Rate",
+        codeSnippet: `PRE_SHIELD: 'flask-auth-helpers' -> BLOCKED (SEC-SLOPSQUAT-001)
+AST_TAINT: user_input -> subprocess.run(shell=True) (CWE-78)
+CRITIC: Claude 3.7 disproves safety -> CONSENSUS_AGREED
+SANDBOX: Docker container pytest -> exit code 1 (REPRODUCED)
+RECEIPT: SHA-256 e8f3a9... -> OASIS SARIF v2.1.0 exported`,
       },
     },
     {
       id: "security",
-      number: "L1 // BOUNDARY & RBAC",
-      title: "Enterprise RBAC & Grounded Boundaries",
-      tag: "PostgreSQL · RBAC · ChromaDB",
+      number: "L1 // 3-LAYER RBAC & DUCKDB SANDBOX",
+      title: "3-Layer RBAC & In-Memory Analytical Sandbox",
+      tag: "ChromaDB · DuckDB · Cohere Rerank v3",
       description:
-        "Multi-tenant data isolation enforced before retrieval even starts. Strict departmental permissions guarantee Finance never leaks into Engineering, with 100% RBAC boundary compliance.",
+        "Department-isolated vector partitioning enforced at three distinct layers (live JWT claim re-fetch, pre-LLM department guard, and ChromaDB metadata barriers). Sandboxed in-memory DuckDB executes financial SQL with external file access completely disabled.",
       bullets: [
-        "Department-scoped vector metadata filtering",
-        "Zero cross-tenant data leakage",
-        "PII redaction and prompt guardrails",
-        "Audited retrieval query trails",
+        "3-layer defensive RBAC across 6 enterprise roles",
+        "4-stage hybrid retrieval (dense + BM25 + RRF + Cohere)",
+        "In-memory DuckDB sandbox (256MB cap, 10s timeout)",
+        "0 cross-department leakages across 90 test suites",
       ],
       icon: Lock,
       preview: {
         headline: "Multi-Tenant Department Barrier",
         stat1: "100%",
         stat1Label: "RBAC Isolation Compliance",
-        stat2: "0%",
-        stat2Label: "Cross-Tenant Leakage",
-        codeSnippet: `SELECT * FROM vector_store
-WHERE tenant_id = 'org_442'
-  AND department IN ('finance')
-  AND classification <= 'confidential'
-ORDER BY embedding <=> query_vector
-LIMIT 5;
-→ Filtered 284 candidate docs to 3 authorized chunks`,
+        stat2: "0",
+        stat2Label: "Department Boundary Leaks",
+        codeSnippet: `PRE_LLM_GUARD: User role 'analyst' -> authorized depts: ['research']
+RETRIEVAL: ChromaDB dense + SQLite FTS5 BM25 -> RRF fusion score 0.912
+RERANK: Cohere v3 cross-encoder top-3 chunks selected
+DUCKDB_SANDBOX: enable_external_access=False, mem_limit='256MB'
+VERDICT: 100% RBAC compliance, unauthorized 'finance' docs blocked`,
       },
     },
     {
       id: "evals",
-      number: "L2 // EVALS & COST TELEMETRY",
-      title: "RAGAS Evals, Caching & Cost Control",
-      tag: "RAGAS · DuckDB · Gemini",
+      number: "L2 // STREAM REPLAY & EMPIRICAL EVALUATION",
+      title: "Sub-20ms Redis Cache & RAGAS LLM-as-Judge",
+      tag: "Redis 7 · RAGAS · SlowAPI",
       description:
-        "Stop flying blind on LLM quality and spend. Dual-tier semantic caching cuts token bills by up to 45%, while RAGAS continuously verifies faithfulness and context relevance on every query.",
+        "Tiered SlowAPI rate limiting coupled with role-scoped Redis 7 caching for sub-20ms streaming replay on duplicate queries. Continuous LLM-as-judge evaluation measuring Faithfulness (0.850) and Context Relevancy (0.894).",
       bullets: [
-        "RAGAS Faithfulness: 0.94 score",
-        "Semantic similarity caching with Redis + DuckDB",
-        "P95 latency waterfall tracking (TTFT + Generation)",
-        "Automated regression test matrix",
+        "Sub-20ms Redis cached stream replay",
+        "RAGAS Relevancy: 0.894 | Faithfulness: 0.850",
+        "SlowAPI multi-tiered IP/user rate limiting",
+        "Automated OWASP LLM Top 10 mitigation suite",
       ],
       icon: Activity,
       preview: {
-        headline: "Semantic Caching & Evals Engine",
-        stat1: "0.94",
-        stat1Label: "RAGAS Faithfulness Score",
-        stat2: "45%",
-        stat2Label: "Token Cost Savings",
-        codeSnippet: `Query: "Summarize Q3 balance sheet debt-to-equity"
-→ Exact Cache: MISS
-→ Semantic Cache (threshold 0.88): HIT (score 0.92)
-→ Bypassed LLM generation: Saved 1,420 tokens
-→ Verified against ground truth: PASS (0.95 relevance)`,
+        headline: "Role-Scoped Cache & Evals Engine",
+        stat1: "0.894",
+        stat1Label: "RAGAS Context Relevancy",
+        stat2: "< 20ms",
+        stat2Label: "Redis Cache Stream Replay",
+        codeSnippet: `CACHE_KEY: sha256(role: 'analyst' + query: 'Q3 balance sheet')
+EXACT_CACHE: HIT -> Redis 7 in-memory stream replay
+LATENCY: TTFT = 14ms (P95 < 20ms) vs 1,450ms un-cached
+EVALUATION: RAGAS Relevancy = 0.894, Faithfulness = 0.850
+TELEMETRY: 90 automated tests passed (60 RBAC, 20 OWASP, 10 Evals)`,
       },
     },
   ];
@@ -124,7 +119,7 @@ LIMIT 5;
           </span>
         </h2>
         <p className="section-description max-w-2xl text-neutral-400">
-          I think in diagrams and build in code. Every GenAI engagement starts with an inspectable architecture you can actually trace — then it becomes resilient production code.
+          I think in diagrams and build in code. Every GenAI platform starts with an inspectable architecture you can trace from input to verdict — then it becomes resilient production code.
         </p>
       </div>
 
@@ -253,7 +248,7 @@ LIMIT 5;
             </div>
 
             <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400">
-              <span>architecture_version: v2.4</span>
+              <span>architecture_version: v3.0</span>
               <a
                 href="#lab"
                 className="text-[#64D8C3] hover:underline flex items-center gap-1"

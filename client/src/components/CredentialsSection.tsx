@@ -5,9 +5,9 @@ export function CredentialsSection() {
   const credentials = [
     {
       issuer: "Abbottabad University of Science & Tech",
-      title: "Bachelor of Science in Computer Science",
-      code: "BSCS",
-      year: "2026",
+      title: "Bachelor of Science in Computer Science (BSCS)",
+      code: "BSCS · 2026",
+      year: "2022–2026",
       isPrimary: true,
       iconType: "degree",
     },
@@ -20,28 +20,28 @@ export function CredentialsSection() {
       iconType: "internship",
     },
     {
-      issuer: "Applied Generative AI Architecture",
-      title: "Multi-Agent Orchestration & Tool Execution",
-      code: "CREW-MCP",
+      issuer: "DeepLearning.AI & Stanford Online",
+      title: "Machine Learning Specialization",
+      code: "ML-SPEC",
+      year: "2024",
+      isPrimary: false,
+      logoId: "gemini",
+    },
+    {
+      issuer: "DeepLearning.AI & CrewAI",
+      title: "Multi-Agent Systems & Tool Orchestration",
+      code: "CREW-AGENTS",
       year: "2025",
       isPrimary: false,
       logoId: "crewai",
     },
     {
-      issuer: "RAG Evaluation Framework",
-      title: "Faithfulness & Grounded Benchmark Evals",
-      code: "RAGAS-EVAL",
+      issuer: "DeepLearning.AI",
+      title: "Production RAG & Vector Evaluation",
+      code: "RAG-EVALS",
       year: "2025",
       isPrimary: false,
       logoId: "ragas",
-    },
-    {
-      issuer: "Google Cloud & AI Runtimes",
-      title: "Serverless AI & Gemini 2.5 Engineering",
-      code: "GCP-AI",
-      year: "2025",
-      isPrimary: false,
-      logoId: "gcp",
     },
   ];
 
@@ -63,7 +63,7 @@ export function CredentialsSection() {
           </span>
         </h2>
         <p className="section-description max-w-2xl text-neutral-400">
-          Academic foundation in Computer Science combined with hands-on enterprise AI laboratory experience and open-source contributions.
+          Academic foundation in Computer Science combined with hands-on enterprise AI laboratory experience, Stanford Online / DeepLearning.AI specializations, and open-source contributions.
         </p>
       </div>
 

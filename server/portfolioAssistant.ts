@@ -1,5 +1,6 @@
 import {
   getPortfolioFacts,
+  getProject,
   profile,
   projects,
   services,
@@ -20,11 +21,11 @@ export function sanitizePortfolioHistory(messages: PortfolioChatMessage[]) {
 export function getFallbackPortfolioAnswer(question: string): string {
   const q = question.toLowerCase();
   const project = q.includes("finsight")
-    ? projects[0]
+    ? getProject("finsight")
     : /code.?review|pr review|pull request|semgrep/.test(q)
-      ? projects[1]
+      ? getProject("ai-code-review-agent")
       : q.includes("factscope")
-        ? projects[2]
+        ? getProject("factscope-ai")
         : undefined;
   if (project)
     return `${project.title}: ${project.description} ${project.evidence.map(e => `${e.value} ${e.label} (${e.scope})`).join(" ")} Read the [case study](/projects/${project.slug}) or [source code](${project.repository}).`;

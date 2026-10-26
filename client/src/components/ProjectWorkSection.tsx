@@ -5,53 +5,58 @@ import {
   Bot,
   Database,
   CheckCircle2,
-  Play,
   Github,
   Layers,
   ShieldCheck,
-  Zap,
+  Code2,
+  ExternalLink,
 } from "lucide-react";
 import { projects } from "@shared/portfolio";
 import { ProjectVideoEmbed } from "./ProjectVideoEmbed";
 
 const PROJECT_ARCHITECTURES = {
   "ai-code-review-agent": {
-    badge: "Flagship · Multi-Agent Swarm",
+    badge: "Flagship · Zero-Trust Code Review",
     icon: Bot,
-    hoverBullets: [
-      "14-case ground truth test harness with 100% verdict accuracy",
-      "Model Context Protocol (MCP) JSON-RPC 2.0 tool execution",
-      "Deterministic AST callgraph dependency impact tracing",
-      "Semgrep static security rules & sandboxed reproduction",
-      "FastAPI backend with automated SARIF vulnerability export",
+    highlights: [
+      "100.0% Benchmark F1 on 14 ground-truth CWEs (v3.0 scorer)",
+      "Polyglot Tree-Sitter AST & inter-procedural taint flow graph",
+      "AI slopsquatting & Trojan Source Unicode Bidi shield",
+      "Cross-family adversarial consensus (Gemini + Claude)",
+      "Docker sandbox pytest fuzzing + OASIS SARIF v2.1.0",
     ],
   },
   finsight: {
-    badge: "Enterprise RAG · Multi-Tenant RBAC",
+    badge: "Enterprise RAG · 3-Layer RBAC",
     icon: Database,
-    hoverBullets: [
-      "Multi-tenant department isolation with 100% RBAC compliance",
-      "RAGAS benchmark verified: 0.94 Faithfulness, 0.91 Relevance",
-      "Dual-tier semantic similarity caching cutting 45% LLM tokens",
-      "Hybrid dense/sparse retrieval with ChromaDB + DuckDB",
-      "Streaming sentence citations linked to page coordinates",
+    highlights: [
+      "3-layer defensive RBAC (JWT, department guard, ChromaDB)",
+      "4-stage hybrid retrieval (dense + BM25 + RRF + Cohere)",
+      "In-memory DuckDB sandbox with external disk access locked",
+      "Redis 7 role-scoped cache (< 20ms streaming replay)",
+      "90 automated test suites (60 RBAC, 20 OWASP, 10 evals)",
     ],
   },
   "factscope-ai": {
-    badge: "Full-Stack AI · Automated Verification",
+    badge: "Full-Stack AI · Live Web Grounding",
     icon: CheckCircle2,
-    hoverBullets: [
-      "94.6% claim extraction accuracy with multi-tier LLM fallbacks",
-      "92.1% source grounding validation with evidence weighting",
-      "Multi-tier latency failover circuit breaker (< 1.8s P95)",
-      "Streaming verification confidence breakdown & audit trail",
-      "Fully containerized Docker deployment on cloud runtimes",
+    highlights: [
+      "Automated claim deconstruction & entity extraction",
+      "Live Google Search grounding citations & authoritative scoring",
+      "3-tier resilient model failover circuit breaker",
+      "24h normalized input caching eliminating redundant LLM calls",
+      "Web SPA + Electron desktop deployment with local storage",
     ],
   },
 };
 
 export function ProjectWorkSection() {
-  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const [activeTabBySlug, setActiveTabBySlug] = useState<Record<string, "overview" | "arch">>({});
+
+  const getTab = (slug: string) => activeTabBySlug[slug] || "overview";
+  const toggleTab = (slug: string, tab: "overview" | "arch") => {
+    setActiveTabBySlug((prev) => ({ ...prev, [slug]: tab }));
+  };
 
   return (
     <section id="work" className="section-wrap work-section scroll-mt-24">
@@ -65,13 +70,13 @@ export function ProjectWorkSection() {
           <span className="text-neutral-500">]</span>
         </p>
         <h2 className="font-display text-3xl md:text-4xl xl:text-[2.75rem] font-bold tracking-tight text-white max-w-3xl">
-          Hover a project to expose its{" "}
+          Engineered for production.{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#64D8C3] to-[#80E5D3]">
-            architecture layer.
+            Verified with proofs.
           </span>
         </h2>
         <p className="section-description max-w-2xl text-neutral-400">
-          The polished UI is only the surface. What matters in production is what runs underneath — the agent boundaries, deterministic evals, and RBAC isolation.
+          The UI is only the surface. What matters in enterprise AI is what runs underneath — compiler-grade ASTs, deterministic slopsquatting defenses, and 3-layer RBAC isolation.
         </p>
       </div>
 
@@ -82,22 +87,19 @@ export function ProjectWorkSection() {
             PROJECT_ARCHITECTURES[project.slug as keyof typeof PROJECT_ARCHITECTURES] || {
               badge: "Production AI System",
               icon: Layers,
-              hoverBullets: [
+              highlights: [
                 "Production-grade GenAI architecture",
                 "Deterministic evaluation and ground-truth validation",
                 "Modular service boundaries and containerized deployment",
               ],
             };
           const IconComponent = arch.icon;
-          const isHovered = hoveredSlug === project.slug;
+          const currentTab = getTab(project.slug);
 
           return (
             <div
               key={project.slug}
-              onMouseEnter={() => setHoveredSlug(project.slug)}
-              onMouseLeave={() => setHoveredSlug(null)}
-              onClick={() => setHoveredSlug(prev => prev === project.slug ? null : project.slug)}
-              className="beam-card group relative rounded-3xl border border-white/10 bg-[#0c1220] overflow-hidden min-h-[28rem] sm:min-h-[30rem] flex flex-col transition-all duration-300 hover:border-[#64D8C3]/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+              className="beam-card group relative rounded-3xl border border-white/10 bg-[#0c1220] overflow-hidden min-h-[32rem] flex flex-col transition-all duration-300 hover:border-[#64D8C3]/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
             >
               {/* Image Preview Container */}
               <div className="relative aspect-[16/10] overflow-hidden bg-black/50 border-b border-white/10">
@@ -133,52 +135,71 @@ export function ProjectWorkSection() {
               {/* Card Body */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="w-8 h-8 rounded-lg bg-[#64D8C3]/10 border border-[#64D8C3]/25 flex items-center justify-center text-[#64D8C3]">
-                      <IconComponent size={16} />
-                    </span>
-                    <h3 className="font-display text-xl font-bold text-white leading-snug">
-                      <Link
-                        href={`/projects/${project.slug}`}
-                        className="hover:text-[#64D8C3] transition-colors"
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-lg bg-[#64D8C3]/10 border border-[#64D8C3]/25 flex items-center justify-center text-[#64D8C3] shrink-0">
+                        <IconComponent size={16} />
+                      </span>
+                      <h3 className="font-display text-xl font-bold text-white leading-snug">
+                        <Link
+                          href={`/projects/${project.slug}`}
+                          className="hover:text-[#64D8C3] transition-colors"
+                          aria-label={`Explore the case study — ${project.title}`}
+                        >
+                          {project.title}
+                        </Link>
+                      </h3>
+                    </div>
+
+                    {/* View Switcher: Overview vs Under The Hood */}
+                    <div className="flex items-center border border-white/10 rounded-full p-0.5 bg-white/[0.02]">
+                      <button
+                        type="button"
+                        onClick={() => toggleTab(project.slug, "overview")}
+                        className={`font-mono text-[10px] px-2.5 py-0.5 rounded-full transition-colors ${
+                          currentTab === "overview"
+                            ? "bg-[#64D8C3]/20 text-[#64D8C3] font-semibold"
+                            : "text-neutral-400 hover:text-white"
+                        }`}
                       >
-                        {project.title}
-                      </Link>
-                    </h3>
+                        Summary
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toggleTab(project.slug, "arch")}
+                        className={`font-mono text-[10px] px-2.5 py-0.5 rounded-full transition-colors ${
+                          currentTab === "arch"
+                            ? "bg-[#64D8C3]/20 text-[#64D8C3] font-semibold"
+                            : "text-neutral-400 hover:text-white"
+                        }`}
+                      >
+                        Arch
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Dynamic flip: Default Summary vs Hover Technical Layer */}
-                  <div className="relative min-h-[110px]">
-                    {/* Normal Summary */}
-                    <div
-                      className={`transition-all duration-300 ${
-                        isHovered ? "opacity-0 pointer-events-none hidden" : "opacity-100 block"
-                      }`}
-                    >
-                      <p className="text-sm text-neutral-300 leading-relaxed mb-4">
+                  {/* Dynamic View: Overview vs Architecture */}
+                  {currentTab === "overview" ? (
+                    <div>
+                      <p className="text-sm text-neutral-300 leading-relaxed mb-4 min-h-[4rem]">
                         {project.summary}
                       </p>
-                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/5 font-mono text-xs">
+                      <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/10 font-mono text-xs">
                         {project.evidence.slice(0, 2).map((item) => (
-                          <div key={item.label}>
-                            <span className="font-bold text-[#64D8C3] block">{item.value}</span>
-                            <span className="text-neutral-400 text-[11px] block">{item.label}</span>
+                          <div key={item.label} className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5">
+                            <span className="font-bold text-[#64D8C3] text-sm block">{item.value}</span>
+                            <span className="text-neutral-400 text-[11px] block mt-0.5 line-clamp-1">{item.label}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-
-                    {/* Hover Architecture Layer */}
-                    <div
-                      className={`transition-all duration-300 ${
-                        isHovered ? "opacity-100 block" : "opacity-0 pointer-events-none hidden"
-                      }`}
-                    >
+                  ) : (
+                    <div>
                       <p className="font-mono text-[10px] text-[#64D8C3] uppercase tracking-wider mb-2 flex items-center gap-1.5">
                         <ShieldCheck size={13} /> Under The Hood Architecture
                       </p>
-                      <ul className="space-y-1.5">
-                        {arch.hoverBullets.map((bullet) => (
+                      <ul className="space-y-1.5 min-h-[7.5rem]">
+                        {arch.highlights.map((bullet) => (
                           <li
                             key={bullet}
                             className="flex items-start gap-2 font-mono text-xs text-neutral-200"
@@ -189,12 +210,12 @@ export function ProjectWorkSection() {
                         ))}
                       </ul>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Footer tags and links */}
                 <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5 max-w-[70%]">
+                  <div className="flex flex-wrap gap-1.5 max-w-[60%]">
                     {project.stack.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
@@ -205,12 +226,25 @@ export function ProjectWorkSection() {
                     ))}
                   </div>
 
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#64D8C3] hover:text-white transition-colors"
-                  >
-                    Details <ArrowUpRight size={14} />
-                  </Link>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.repository}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 text-neutral-400 hover:text-white transition-colors"
+                      title="View Source on GitHub"
+                      aria-label={`${project.title} GitHub repository`}
+                    >
+                      <Github size={15} />
+                    </a>
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#64D8C3] hover:text-white transition-colors"
+                      aria-label={`Explore the case study — ${project.title}`}
+                    >
+                      Case Study <ArrowUpRight size={14} />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
